@@ -37,6 +37,7 @@
                 android:id="@+id/TvHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
                 android:text="POST AN ANNOUNCEMENT"
                 android:textColor="#F8F5F5"
