@@ -34,10 +34,10 @@ public class LoginActivity extends AppCompatActivity {
         Button regButton   = findViewById(R.id.registerButton);
 
 
-//        loginButton.setOnClickListener(v -> {
-//            Intent intent = new Intent(LoginActivity.this, StaffDashboardActivity.class);
-//            startActivity(intent);
-//        });
+        loginButton.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, StaffDashboardActivity.class);
+            startActivity(intent);
+        });
         loginManagerButton.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, ManagerDashboardActivity.class);
             startActivity(intent);
