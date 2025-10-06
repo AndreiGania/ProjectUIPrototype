@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectUIPrototype">
         <activity
-            android:name=".AnnouncementAcvtivity"
+            android:name=".AnnouncementsAcvtivity"
             android:exported="false" />
         <activity
             android:name=".StaffDashboardActivity"
