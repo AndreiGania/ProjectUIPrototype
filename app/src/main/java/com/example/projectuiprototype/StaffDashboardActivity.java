@@ -48,5 +48,13 @@ public class StaffDashboardActivity extends AppCompatActivity {
             Intent intent = new Intent(StaffDashboardActivity.this, InventoryActivity.class);
             startActivity(intent);
         });
+
+        Button btnMySchedule = findViewById(R.id.btnSchedule);
+        btnMySchedule.setOnClickListener(v -> {
+            Intent intent = new Intent(StaffDashboardActivity.this, MyScheduleActivity.class);
+            startActivity(intent);
+        });
+
+
     }
 }

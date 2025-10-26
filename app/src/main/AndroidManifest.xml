@@ -12,10 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectUIPrototype">
         <activity
-            android:name=".InventoryActivity"
+            android:name=".MyScheduleActivity"
             android:exported="false" />
         <activity
             android:name=".ManageShiftsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InventoryActivity"
             android:exported="false" />
         <activity
             android:name=".AnnouncementsActivity"

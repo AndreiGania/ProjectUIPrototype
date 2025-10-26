@@ -33,6 +33,14 @@ public class ManagerDashboardActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+
+        Button btnManageShifts = findViewById(R.id.btnManageShifts);
+        btnManageShifts.setOnClickListener(v -> {
+            Intent intent = new Intent(ManagerDashboardActivity.this, ManageShiftsActivity.class);
+            startActivity(intent);
+        });
+
+
     }
 
 }

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/image"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Schedule"
+            android:textColor="#3C2A21"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:paddingBottom="10dp" />
+
+        <!-- Subtitle (now readable with shadow) -->
+        <TextView
+            android:id="@+id/tvScheduleInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Here you can view your upcoming shifts."
+            android:textColor="#FFFFFF"
+            android:shadowColor="#80000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="4"
+            android:textSize="16sp"
+            android:paddingBottom="20dp" />
+
+        <!-- Example Weekly Schedule -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#CCFFFFFF"
+            android:padding="16dp"
+            android:layout_marginBottom="20dp"
+            android:elevation="4dp"
+            android:backgroundTint="#FFFFFF"
+            android:clipToOutline="true"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Weekly Schedule"
+                android:textStyle="bold"
+                android:textColor="#3C2A21"
+                android:textSize="18sp"
+                android:paddingBottom="10dp" />
+
+            <!-- Each day -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Monday: 9:00 AM – 5:00 PM"
+                android:textColor="#5B4B3A"
+                android:paddingBottom="6dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tuesday: 10:00 AM – 6:00 PM"
+                android:textColor="#5B4B3A"
+                android:paddingBottom="6dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Wednesday: OFF"
+                android:textColor="#B23B3B"
+                android:paddingBottom="6dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Thursday: 8:00 AM – 4:00 PM"
+                android:textColor="#5B4B3A"
+                android:paddingBottom="6dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Friday: 12:00 PM – 8:00 PM"
+                android:textColor="#5B4B3A"
+                android:paddingBottom="6dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Saturday: 9:00 AM – 3:00 PM"
+                android:textColor="#5B4B3A"
+                android:paddingBottom="6dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sunday: OFF"
+                android:textColor="#B23B3B"
+                android:paddingBottom="6dp"/>
+        </LinearLayout>
+
+        <!-- Buttons -->
+
+        <Button
+            android:id="@+id/btnRequestChange"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Request Shift Change"
+            android:backgroundTint="#3C2A21"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+</ScrollView>
