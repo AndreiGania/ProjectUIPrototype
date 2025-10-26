@@ -17,18 +17,19 @@ public class StaffDashboardActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_staff_dashboard);
 
-        // Handle system insets
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.cardAnnouncements), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // 🔹 Link buttons to code (IDs must match your XML)
+        // 🔹Link buttons to code (IDs must match your XML)
         Button btnViewAll = findViewById(R.id.btnViewAllAnnouncements);
         Button btnAnnouncements = findViewById(R.id.btnAnnouncements);
+        Button btnInventory = findViewById(R.id.btnInventory);
 
-        // 🔹 Button: View All Announcements
+        //  Button: View All Announcements
         btnViewAll.setOnClickListener(v -> {
             Intent intent = new Intent(StaffDashboardActivity.this, AnnouncementsActivity.class);
             startActivity(intent);
@@ -36,9 +37,15 @@ public class StaffDashboardActivity extends AppCompatActivity {
 
 
 
-        // 🔹 Button: Announcements
+        //  Button: Announcements
         btnAnnouncements.setOnClickListener(v -> {
             Intent intent = new Intent(StaffDashboardActivity.this, AnnouncementsActivity.class);
+            startActivity(intent);
+        });
+
+        // Button: Inventory
+        btnInventory.setOnClickListener(v -> {
+            Intent intent = new Intent(StaffDashboardActivity.this, InventoryActivity.class);
             startActivity(intent);
         });
     }

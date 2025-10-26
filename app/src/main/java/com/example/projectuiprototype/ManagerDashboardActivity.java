@@ -23,9 +23,14 @@ public class ManagerDashboardActivity extends AppCompatActivity {
             return insets;
         });
         Button postBtn = findViewById(R.id.btnPostAnnouncement);
+        Button btnInventory = findViewById(R.id.btnInventory);
         postBtn.setOnClickListener(v -> {
-            Intent i = new Intent(ManagerDashboardActivity.this, PostAnnouncementActivity.class);
-            startActivity(i);
+            Intent intent = new Intent(ManagerDashboardActivity.this, PostAnnouncementActivity.class);
+            startActivity(intent);
+        });
+        btnInventory.setOnClickListener(v -> {
+            Intent intent = new Intent(ManagerDashboardActivity.this, InventoryActivity.class);
+            startActivity(intent);
         });
 
     }
