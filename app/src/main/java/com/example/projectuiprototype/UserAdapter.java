@@ -40,16 +40,22 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
         holder.txtUserRow.setText(user.username + " (" + user.role + ")");
 
+        // Hide button if already manager
+        if(user.role.equals("manager")) {
+            holder.btnPromoteManager.setVisibility(View.GONE);
+        }
+
         // 🔥 Promote to Manager Button
         holder.btnPromoteManager.setOnClickListener(v -> {
-            user.role = "manager";
-
             DatabaseClient.getInstance(context)
                     .getDatabase()
                     .userDao()
-                    .registerUser(user); // will insert updated row
+                    .updateRole(user.id, "manager");
 
-            Toast.makeText(context, user.username + " promoted to Manager", Toast.LENGTH_SHORT).show();
+            user.role = "manager";
+            notifyItemChanged(position);
+
+            Toast.makeText(context, user.username + " is now a MANAGER!", Toast.LENGTH_SHORT).show();
         });
     }
 
