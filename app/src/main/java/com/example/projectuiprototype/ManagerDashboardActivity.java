@@ -24,6 +24,8 @@ public class ManagerDashboardActivity extends AppCompatActivity {
         });
         Button postBtn = findViewById(R.id.btnPostAnnouncement);
         Button btnInventory = findViewById(R.id.btnInventory);
+        Button btnManageUsers = findViewById(R.id.btnManageUsers);
+
         postBtn.setOnClickListener(v -> {
             Intent intent = new Intent(ManagerDashboardActivity.this, PostAnnouncementActivity.class);
             startActivity(intent);
@@ -33,6 +35,9 @@ public class ManagerDashboardActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        btnManageUsers.setOnClickListener(v -> {
+            startActivity(new Intent(this, ManageUsersActivity.class));
+        });
 
         Button btnManageShifts = findViewById(R.id.btnManageShifts);
         btnManageShifts.setOnClickListener(v -> {

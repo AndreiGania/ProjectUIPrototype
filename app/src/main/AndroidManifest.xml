@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectUIPrototype">
         <activity
+            android:name=".ManageUsersActivity"
+            android:exported="false" />
+        <activity
             android:name=".MyScheduleActivity"
             android:exported="false" />
         <activity

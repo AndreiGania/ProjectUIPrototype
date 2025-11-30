@@ -115,6 +115,7 @@
             android:id="@+id/btnManageShifts"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:layout_marginTop="12dp"
             android:layout_marginBottom="10dp"
             android:backgroundTint="#F2C045"
             android:text="Manage Shifts"
@@ -130,6 +131,7 @@
             android:backgroundTint="#F6E3D3"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:layout_marginTop="12dp"
             android:layout_marginBottom="10dp"/>
 
         <!-- Inventory tracking -->
@@ -141,7 +143,19 @@
             android:backgroundTint="#4E342E"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:layout_marginTop="12dp"
             android:layout_marginBottom="10dp"/>
+
+
+        <Button
+            android:id="@+id/btnManageUsers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Manage Users"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="#D4A017"
+            android:textColor="@android:color/white"/>
+
 
         <!-- Reporting -->
     </LinearLayout>
