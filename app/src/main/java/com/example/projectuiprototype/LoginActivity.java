@@ -3,51 +3,78 @@ package com.example.projectuiprototype;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.example.projectuiprototype.database.DatabaseClient;
+import com.example.projectuiprototype.models.User;
 
 public class LoginActivity extends AppCompatActivity {
+
+    EditText usernameInput, passwordInput;
+    Button loginButton, loginManagerButton, regButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.loginCard), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
-//        Button button = findViewById(R.id.registerButton);
-//        button.setOnClickListener(v -> {
-//            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-//            startActivity(intent);
-//        });
-
-        Button loginButton = findViewById(R.id.signInButton);
-        Button loginManagerButton = findViewById(R.id.managerSignButton);
-        Button regButton   = findViewById(R.id.registerButton);
+        // 🔹 Link UI elements
+        usernameInput = findViewById(R.id.usernameInput);
+        passwordInput = findViewById(R.id.passwordInput);
 
 
-        loginButton.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, StaffDashboardActivity.class);
-            startActivity(intent);
-        });
-        loginManagerButton.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, ManagerDashboardActivity.class);
-            startActivity(intent);
-        });
+        loginButton        = findViewById(R.id.signInButton);
+        loginManagerButton = findViewById(R.id.managerSignButton);
+        regButton          = findViewById(R.id.registerButton);
 
+        // 🔸 Normal employee login
+        loginButton.setOnClickListener(v -> login(false));
+
+        // 🔸 Manager login button
+        loginManagerButton.setOnClickListener(v -> login(true));
+
+        // 🔸 Go to register screen
         regButton.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(intent);
         });
+    }
 
+    private void login(boolean managerLogin) {
 
+        String username = usernameInput.getText().toString().trim();
+        String password = passwordInput.getText().toString().trim();
+
+        if(username.isEmpty() || password.isEmpty()){
+            Toast.makeText(this, "Please enter credentials", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Query DB for user
+        User user = DatabaseClient.getInstance(this)
+                .getDatabase()
+                .userDao()
+                .login(username, password);
+
+        if(user == null){
+            Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(managerLogin && !user.role.equals("manager")){
+            Toast.makeText(this, "You are not a manager", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(user.role.equals("manager"))
+            startActivity(new Intent(this, ManagerDashboardActivity.class));
+        else
+            startActivity(new Intent(this, StaffDashboardActivity.class));
+
+        Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
+        finish();
     }
 }

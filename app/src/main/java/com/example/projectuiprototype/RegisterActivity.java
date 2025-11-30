@@ -1,32 +1,68 @@
 package com.example.projectuiprototype;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.example.projectuiprototype.database.DatabaseClient;
+import com.example.projectuiprototype.models.User;
 
 public class RegisterActivity extends AppCompatActivity {
+
+    EditText fullName, emailAdd, userInput, passInput, repeatPass;
+    Button registerBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_register);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
-        Button button = findViewById(R.id.btn_registeracc);
-        button.setOnClickListener(v -> {
-            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-            startActivity(intent);
-        });
+        // Link fields to XML IDs
+        fullName   = findViewById(R.id.fullName);
+        emailAdd   = findViewById(R.id.emailAdd);
+        userInput  = findViewById(R.id.UserInput);
+        passInput  = findViewById(R.id.PassInput);
+        repeatPass = findViewById(R.id.repeatPass);
+
+        registerBtn = findViewById(R.id.btn_registeracc);
+
+        registerBtn.setOnClickListener(v -> registerUser());
+    }
+
+    private void registerUser(){
+
+        String name     = fullName.getText().toString().trim();
+        String email    = emailAdd.getText().toString().trim();
+        String username = userInput.getText().toString().trim();
+        String password = passInput.getText().toString().trim();
+        String confirm  = repeatPass.getText().toString().trim();
+
+        if(name.isEmpty() || email.isEmpty() || username.isEmpty() || password.isEmpty()){
+            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(!password.equals(confirm)){
+            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        User user = new User();
+        user.name = name;
+        user.email = email;
+        user.username = username;
+        user.password = password;
+        user.role = "employee"; // DEFAULT — manager system can be added later
+
+        DatabaseClient.getInstance(this)
+                .getDatabase()
+                .userDao()
+                .registerUser(user);
+
+        Toast.makeText(this, "Account created successfully!", Toast.LENGTH_SHORT).show();
+        finish(); // return to login screen
     }
 }
