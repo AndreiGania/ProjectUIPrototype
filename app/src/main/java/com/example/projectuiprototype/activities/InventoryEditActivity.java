@@ -13,47 +13,44 @@ import com.example.projectuiprototype.models.InventoryItem;
 
 public class InventoryEditActivity extends AppCompatActivity {
 
-    EditText itemName, itemQty;
+    EditText itemName,itemQty;
     Button saveBtn;
-    InventoryItem editingItem = null;
+    InventoryItem editingItem=null;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory_edit);
 
-        itemName = findViewById(R.id.inputName);
-        itemQty = findViewById(R.id.inputQty);
-        saveBtn = findViewById(R.id.btnSaveItem);
+        itemName=findViewById(R.id.inputName);
+        itemQty=findViewById(R.id.inputQty);
+        saveBtn=findViewById(R.id.btnSaveItem);
 
-        if(getIntent().hasExtra("id")) {
-            editingItem = new InventoryItem();
-            editingItem.id = getIntent().getIntExtra("id", 0);
+        if(getIntent().hasExtra("id")){
+            editingItem=new InventoryItem();
+            editingItem.id=getIntent().getIntExtra("id",0);
             itemName.setText(getIntent().getStringExtra("name"));
             itemQty.setText(getIntent().getStringExtra("qty"));
         }
 
-        saveBtn.setOnClickListener(v -> saveItem());
+        saveBtn.setOnClickListener(v -> save());
     }
 
-    private void saveItem() {
-        InventoryDao dao = DatabaseClient.getInstance(this).getDatabase().inventoryDao();
+    private void save(){
+        InventoryDao dao= DatabaseClient.getInstance(this).getDatabase().inventoryDao();
 
-        if(editingItem == null) {
-            InventoryItem item = new InventoryItem();
-            item.name = itemName.getText().toString();
-            item.quantity = itemQty.getText().toString();
-
-            dao.addItem(item);
-            Toast.makeText(this, "Item added!", Toast.LENGTH_SHORT).show();
+        if(editingItem==null){
+            InventoryItem newItem=new InventoryItem();
+            newItem.name=itemName.getText().toString();
+            newItem.quantity=itemQty.getText().toString();
+            dao.addItem(newItem);
+            Toast.makeText(this,"Item added!",Toast.LENGTH_SHORT).show();
         } else {
-            editingItem.name = itemName.getText().toString();
-            editingItem.quantity = itemQty.getText().toString();
-
+            editingItem.name=itemName.getText().toString();
+            editingItem.quantity=itemQty.getText().toString();
             dao.updateItem(editingItem);
-            Toast.makeText(this, "Item updated!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Item updated!",Toast.LENGTH_SHORT).show();
         }
-
         finish();
     }
 }
