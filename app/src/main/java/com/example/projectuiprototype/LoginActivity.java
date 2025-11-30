@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.projectuiprototype.database.DatabaseClient;
 import com.example.projectuiprototype.models.User;
+import com.example.projectuiprototype.dao.UserDao;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -21,26 +22,26 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // 🔹 Link UI elements
+        // AUTO-CREATE FIRST MANAGER ACCOUNT 🟢
+        createDefaultManagerAccount();
+
         usernameInput = findViewById(R.id.usernameInput);
         passwordInput = findViewById(R.id.passwordInput);
-
 
         loginButton        = findViewById(R.id.signInButton);
         loginManagerButton = findViewById(R.id.managerSignButton);
         regButton          = findViewById(R.id.registerButton);
 
-        // 🔸 Normal employee login
+        // Employee Login
         loginButton.setOnClickListener(v -> login(false));
 
-        // 🔸 Manager login button
+        // Manager Login
         loginManagerButton.setOnClickListener(v -> login(true));
 
-        // 🔸 Go to register screen
-        regButton.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-            startActivity(intent);
-        });
+        // Go to Register
+        regButton.setOnClickListener(v ->
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class))
+        );
     }
 
     private void login(boolean managerLogin) {
@@ -53,7 +54,6 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Query DB for user
         User user = DatabaseClient.getInstance(this)
                 .getDatabase()
                 .userDao()
@@ -65,16 +65,33 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if(managerLogin && !user.role.equals("manager")){
-            Toast.makeText(this, "You are not a manager", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Access denied — Manager only", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if(user.role.equals("manager"))
+        if(user.role.equals("manager")){
             startActivity(new Intent(this, ManagerDashboardActivity.class));
-        else
+        } else {
             startActivity(new Intent(this, StaffDashboardActivity.class));
+        }
 
         Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
         finish();
+    }
+
+    // 🔥 Creates default ADMIN only ONCE
+    private void createDefaultManagerAccount(){
+        UserDao userDao = DatabaseClient.getInstance(this).getDatabase().userDao();
+
+        if(userDao.getUserByUsername("admin") == null){
+            User admin = new User();
+            admin.name = "Administrator";
+            admin.email = "admin@cafe.com";
+            admin.username = "admin";
+            admin.password = "admin123";
+            admin.role = "manager";
+
+            userDao.registerUser(admin); // Save in DB permanently
+        }
     }
 }
