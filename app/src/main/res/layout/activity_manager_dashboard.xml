@@ -144,14 +144,6 @@
             android:layout_marginBottom="10dp"/>
 
         <!-- Reporting -->
-        <Button
-            android:id="@+id/btnReports"
-            android:text="Reports"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#4E342E"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
