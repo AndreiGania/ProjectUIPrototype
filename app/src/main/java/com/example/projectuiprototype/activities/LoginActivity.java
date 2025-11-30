@@ -1,4 +1,4 @@
-package com.example.projectuiprototype;
+package com.example.projectuiprototype.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.projectuiprototype.R;
 import com.example.projectuiprototype.database.DatabaseClient;
 import com.example.projectuiprototype.models.User;
 import com.example.projectuiprototype.dao.UserDao;

@@ -1,4 +1,4 @@
-package com.example.projectuiprototype;
+package com.example.projectuiprototype.activities;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.projectuiprototype.R;
 import com.example.projectuiprototype.database.DatabaseClient;
 import com.example.projectuiprototype.models.User;
 
@@ -40,12 +41,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
         holder.txtUserRow.setText(user.username + " (" + user.role + ")");
 
-        // Hide button if already manager
         if(user.role.equals("manager")) {
             holder.btnPromoteManager.setVisibility(View.GONE);
         }
 
-        // 🔥 Promote to Manager Button
         holder.btnPromoteManager.setOnClickListener(v -> {
             DatabaseClient.getInstance(context)
                     .getDatabase()

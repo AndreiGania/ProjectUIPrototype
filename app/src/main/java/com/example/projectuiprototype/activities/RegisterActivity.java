@@ -1,4 +1,4 @@
-package com.example.projectuiprototype;
+package com.example.projectuiprototype.activities;
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.projectuiprototype.R;
 import com.example.projectuiprototype.database.DatabaseClient;
 import com.example.projectuiprototype.models.User;
 
@@ -55,7 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
         user.email = email;
         user.username = username;
         user.password = password;
-        user.role = "employee"; // DEFAULT — manager system can be added later
+        user.role = "employee";
 
         DatabaseClient.getInstance(this)
                 .getDatabase()
@@ -63,6 +64,6 @@ public class RegisterActivity extends AppCompatActivity {
                 .registerUser(user);
 
         Toast.makeText(this, "Account created successfully!", Toast.LENGTH_SHORT).show();
-        finish(); // return to login screen
+        finish();
     }
 }
