@@ -55,6 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:hint="Name"
+                    android:textColor="@color/white"
                     android:minHeight="48dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -69,6 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:hint="Email Address"
+                    android:textColor="@color/white"
                     android:minHeight="48dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
