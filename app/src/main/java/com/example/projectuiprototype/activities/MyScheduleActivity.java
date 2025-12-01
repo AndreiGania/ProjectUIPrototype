@@ -66,7 +66,7 @@ public class MyScheduleActivity extends AppCompatActivity {
 
     private void loadSchedule() {
         List<Shift> shifts = shiftDao.getShiftsForUser(DEMO_USER_ID);
-
+        // If there are no shifts, show a friendly message and stop
         if (shifts == null || shifts.isEmpty()) {
             tvScheduleContent.setText("You have no shifts scheduled yet.");
             return;
