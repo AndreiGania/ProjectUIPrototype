@@ -38,6 +38,9 @@ public class MyScheduleActivity extends AppCompatActivity {
     private static final String SHIFT_REQUEST_TITLE =
             "Shift Change Request";
 
+    private static final String SHIFT_REQUEST_MESSAGE =
+            "Your shift change request has been sent to the manager.";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
