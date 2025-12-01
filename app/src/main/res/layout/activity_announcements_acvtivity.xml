@@ -7,120 +7,51 @@
     android:background="@drawable/sample2">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="40dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="120dp"
+        android:layout_marginBottom="40dp"
         app:cardBackgroundColor="#3C2A21"
-        app:cardCornerRadius="25dp"
-        app:cardElevation="10dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <ScrollView
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="281dp"
             android:layout_height="wrap_content"
-            android:padding="30dp">
+            android:orientation="vertical"
+            android:padding="40dp">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/titleText2"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:gravity="center"
+                android:text="Announcements"
+                android:textColor="#F6E3D3"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <!-- THIS is the TextView we will fill from the DB -->
+            <TextView
+                android:id="@+id/tvAnnouncementsList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:layout_marginTop="24dp"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="8dp"
+                android:lineSpacingExtra="4dp"
+                android:text="Announcement"
+                android:textColor="#F6E3D3"
+                android:textSize="16sp" />
 
-                <!-- Title -->
-                <TextView
-                    android:id="@+id/titleText2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/announcements1"
-                    android:textColor="#F6E3D3"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="25dp"
-                    android:letterSpacing="0.05" />
+        </LinearLayout>
 
-                <!-- Announcement 1 -->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/Launch"
-                    android:textColor="#F6E3D3"
-                    android:textStyle="bold"
-                    android:textSize="17sp"
-                    android:layout_marginTop="10dp"
-                    android:letterSpacing="0.03" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#5A3D2E"
-                    android:layout_marginVertical="6dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/Introduction"
-                    android:textColor="#CBBEB7"
-                    android:textSize="15sp"
-                    android:lineSpacingExtra="4dp"
-                    android:layout_marginBottom="20dp" />
-
-                <!-- Announcement 2 -->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/Appreciation"
-                    android:textColor="#F6E3D3"
-                    android:textStyle="bold"
-                    android:textSize="17sp"
-                    android:layout_marginTop="10dp"
-                    android:letterSpacing="0.03" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#5A3D2E"
-                    android:layout_marginVertical="6dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/Discounted"
-                    android:textColor="#CBBEB7"
-                    android:textSize="15sp"
-                    android:lineSpacingExtra="4dp"
-                    android:layout_marginBottom="20dp" />
-
-                <!-- Announcement 3 -->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/HolidaySchedule"
-                    android:textColor="#F6E3D3"
-                    android:textStyle="bold"
-                    android:textSize="17sp"
-                    android:layout_marginTop="10dp"
-                    android:letterSpacing="0.03" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#5A3D2E"
-                    android:layout_marginVertical="6dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ClosingNotice"
-                    android:textColor="#CBBEB7"
-                    android:textSize="15sp"
-                    android:lineSpacingExtra="4dp"
-                    android:layout_marginBottom="10dp" />
-
-            </LinearLayout>
-        </ScrollView>
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

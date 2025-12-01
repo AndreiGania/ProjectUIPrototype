@@ -44,7 +44,6 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
-    implementation(libs.cardview)
 
     // ROOM (Java + annotationProcessor, no kapt)
     val room_version = "2.6.1"
