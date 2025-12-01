@@ -35,6 +35,10 @@ public class MyScheduleActivity extends AppCompatActivity {
     private static final String NO_SHIFTS_MESSAGE =
             "You have no shifts scheduled yet.";
 
+    private static final String SHIFT_REQUEST_TITLE =
+            "Shift Change Request";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
