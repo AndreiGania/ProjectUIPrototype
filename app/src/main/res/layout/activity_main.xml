@@ -11,9 +11,9 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="429dp"
+        android:layout_width="428dp"
         android:layout_height="821dp"
-        android:layout_marginBottom="132dp"
+        android:layout_marginBottom="131dp"
         android:contentDescription="Cafe Logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
