@@ -65,7 +65,6 @@ public class PostAnnouncementActivity extends AppCompatActivity {
 
             // Build Announcement entity
             Announcement a = new Announcement();
-            // change these if your fields are named differently
             a.title = title;
             a.message = message;
 
