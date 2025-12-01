@@ -26,9 +26,14 @@ public class MyScheduleActivity extends AppCompatActivity {
 
     private ShiftDao shiftDao;
 
+
     // For now, use a demo user id.
     // In a full version you would pass the logged-in user's id here.
     private static final int DEMO_USER_ID = 1;
+
+    // Small text constants for this screen (safe refactor)
+    private static final String NO_SHIFTS_MESSAGE =
+            "You have no shifts scheduled yet.";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
