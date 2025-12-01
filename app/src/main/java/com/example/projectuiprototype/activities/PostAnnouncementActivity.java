@@ -25,6 +25,9 @@ public class PostAnnouncementActivity extends AppCompatActivity {
 
     private AnnouncementDao announcementDao;
 
+    // Small text constants for validation and feedback
+    private static final String ERROR_TITLE_REQUIRED = "Title required";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
