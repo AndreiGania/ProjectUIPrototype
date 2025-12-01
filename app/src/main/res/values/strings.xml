@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">ProjectUIPrototype</string>
+    <string name="todo">TODO</string>
+    <string name="coffee_menu">Coffee Menu</string>
+    <string name="coffee_black">Coffee - Black</string>
+    <string name="cold_brew">Cold Brew</string>
+    <string name="_29_00">₱29.00</string>
+    <string name="to_do">TODO</string>
+    <string name="americano">Americano</string>
+    <string name="Discount">Enjoy 10% off all pastries and drinks from Oct 27–Nov 2. Thank you for supporting your local café!</string>
+    <string name="announcements">Announcements</string>
+    <string name="New">New Coffee Menu Launch!</string>
+    <string name="Seasonal">We’re excited to introduce our new seasonal drinks — Caramel Mocha Latte and Iced Hazelnut Cream Cold Brew. Available starting this weekend!</string>
+    <string name="AppreciationWeek">Customer Appreciation Week</string>
+    <string name="Holiday">Holiday Schedule</string>
+    <string name="Notice">Please note: We’ll be closed on December 25 and January 1 for the holidays. Regular hours will resume after New Year’s Day.</string>
+    <string name="Launch">NEW COFFEE MENU LAUNCH</string>
+    <string name="Introduction">Introducing new seasonal drinks — Caramel Mocha Latte and Iced Hazelnut Cream Cold Brew. Available this weekend!</string>
+    <string name="announcements1">Announcements</string>
+    <string name="Appreciation">CUSTOMER APPRECIATION WEEK</string>
+    <string name="Discounted">Enjoy 10% off all pastries and drinks from Oct 27–Nov 2. Thank you for supporting your local café!</string>
+    <string name="HolidaySchedule">HOLIDAY SCHEDULE</string>
+    <string name="ClosingNotice">We’ll be closed on December 25 and January 1 for the holidays. Regular hours resume after New Year’s Day.</string>
+</resources>

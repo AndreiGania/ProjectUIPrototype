@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/image"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvMyScheduleTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Schedule"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#3C2A21"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Subtitle -->
+        <TextView
+            android:id="@+id/tvMyScheduleSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Here you can view your upcoming shifts."
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Schedule Card -->
+        <LinearLayout
+            android:id="@+id/scheduleCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#CCFFFFFF"
+            android:padding="16dp"
+            android:orientation="vertical"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:id="@+id/tvWeeklyScheduleHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Weekly Schedule"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#3C2A21"
+                android:layout_marginBottom="8dp" />
+
+            <!-- THIS is what we will fill from the DB -->
+            <TextView
+                android:id="@+id/tvScheduleContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Loading your shifts..."
+                android:textColor="#3C2A21"
+                android:textSize="14sp"
+                android:lineSpacingExtra="4dp" />
+        </LinearLayout>
+
+        <!-- Request change button -->
+        <Button
+            android:id="@+id/btnRequestChange"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Request Shift Change"
+            android:backgroundTint="#3C2A21"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+</ScrollView>
