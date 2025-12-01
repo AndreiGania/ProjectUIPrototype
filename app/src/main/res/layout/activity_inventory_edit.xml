@@ -12,7 +12,9 @@
         android:layout_height="wrap_content"
         android:hint="Item Name"
         android:minHeight="48dp"
-        android:textColorHint="#000000"/>
+        android:textColorHint="@android:color/white"
+        android:background="#3C2A21"
+        android:layout_marginBottom="12dp" />
 
     <EditText
         android:id="@+id/inputQty"
@@ -21,7 +23,10 @@
         android:hint="Quantity"
         android:inputType="number"
         android:minHeight="49dp"
-        android:textColorHint="#000000" />
+        android:textColorHint="@android:color/white"
+        android:background="#3C2A21"
+        android:layout_marginBottom="12dp"/>
+
 
     <Button
         android:id="@+id/btnSaveItem"
