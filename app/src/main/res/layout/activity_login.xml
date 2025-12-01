@@ -77,7 +77,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="#D4A017"
+                android:backgroundTint="#FFC107"
                 android:text="Sign In"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
