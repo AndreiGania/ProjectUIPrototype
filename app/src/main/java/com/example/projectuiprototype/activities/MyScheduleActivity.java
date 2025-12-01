@@ -71,7 +71,7 @@ public class MyScheduleActivity extends AppCompatActivity {
             tvScheduleContent.setText("You have no shifts scheduled yet.");
             return;
         }
-
+// Build a readable schedule, one shift per line:
         StringBuilder sb = new StringBuilder();
         for (Shift shift : shifts) {
             sb.append(shift.day)      // e.g. "Monday" or "Morning Shift"
