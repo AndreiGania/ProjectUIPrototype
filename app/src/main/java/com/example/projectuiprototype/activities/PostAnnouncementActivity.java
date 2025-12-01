@@ -27,6 +27,10 @@ public class PostAnnouncementActivity extends AppCompatActivity {
 
     // Small text constants for validation and feedback
     private static final String ERROR_TITLE_REQUIRED = "Title required";
+    private static final String ERROR_MESSAGE_REQUIRED = "Message required";
+    private static final String TOAST_ANNOUNCEMENT_PUBLISHED = "Announcement published";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
