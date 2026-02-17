@@ -8,4 +8,7 @@ public interface AuthApi {
 
     @POST("auth/login")
     Call<LoginResponse> login(@Body LoginRequest request);
+
+    @POST("auth/register")
+    Call<RegisterResponse> register(@Body RegisterRequest request);
 }
