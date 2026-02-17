@@ -32,7 +32,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // API client
-        authApi = ApiClient.getClient().create(AuthApi.class);
+        authApi = ApiClient.getClient(this).create(AuthApi.class);
+
 
         usernameInput = findViewById(R.id.usernameInput);
         passwordInput = findViewById(R.id.passwordInput);

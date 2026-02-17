@@ -29,7 +29,8 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        authApi = ApiClient.getClient().create(AuthApi.class);
+        authApi = ApiClient.getClient(this).create(AuthApi.class);
+
 
         fullName   = findViewById(R.id.fullName);
         emailAdd   = findViewById(R.id.emailAdd);

@@ -4,16 +4,19 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");//test
 const authRoutes = require("./routes/auth");
+const auth = require("./middleware/auth");
+const inventoryRoutes = require("./routes/inventory");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
+
 app.use("/auth", authRoutes);
+app.use("/inventory", auth, inventoryRoutes);
 
 //test
-// 🔐 JWT middleware
 function authMiddleware(req, res, next) {
   const header = req.headers.authorization;
 
