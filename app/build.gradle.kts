@@ -32,7 +32,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    // 🔥 this is what fixes "Unknown Kotlin JVM target: 21"
     kotlinOptions {
         jvmTarget = "11"
     }
@@ -44,6 +43,10 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
 
     // ROOM (Java + annotationProcessor, no kapt)
     val room_version = "2.6.1"

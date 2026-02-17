@@ -1,6 +1,7 @@
 package com.example.projectuiprototype.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,22 +10,29 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.projectuiprototype.R;
-import com.example.projectuiprototype.database.DatabaseClient;
-import com.example.projectuiprototype.models.User;
-import com.example.projectuiprototype.dao.UserDao;
+import com.example.projectuiprototype.api.ApiClient;
+import com.example.projectuiprototype.api.AuthApi;
+import com.example.projectuiprototype.api.LoginRequest;
+import com.example.projectuiprototype.api.LoginResponse;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
     EditText usernameInput, passwordInput;
     Button loginButton, loginManagerButton, regButton;
 
+    private AuthApi authApi;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // AUTO-CREATE FIRST MANAGER ACCOUNT 🟢
-        createDefaultManagerAccount();
+        // API client
+        authApi = ApiClient.getClient().create(AuthApi.class);
 
         usernameInput = findViewById(R.id.usernameInput);
         passwordInput = findViewById(R.id.passwordInput);
@@ -33,65 +41,69 @@ public class LoginActivity extends AppCompatActivity {
         loginManagerButton = findViewById(R.id.managerSignButton);
         regButton          = findViewById(R.id.registerButton);
 
-        // Employee Login
         loginButton.setOnClickListener(v -> login(false));
-
-        // Manager Login
         loginManagerButton.setOnClickListener(v -> login(true));
 
-        // Go to Register
         regButton.setOnClickListener(v ->
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class))
         );
     }
 
     private void login(boolean managerLogin) {
-
         String username = usernameInput.getText().toString().trim();
         String password = passwordInput.getText().toString().trim();
 
-        if(username.isEmpty() || password.isEmpty()){
+        if (username.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Please enter credentials", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        User user = DatabaseClient.getInstance(this)
-                .getDatabase()
-                .userDao()
-                .login(username, password);
+        LoginRequest req = new LoginRequest(username, password);
 
-        if(user == null){
-            Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        authApi.login(req).enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if (!response.isSuccessful() || response.body() == null) {
+                    Toast.makeText(LoginActivity.this,
+                            "Login failed (" + response.code() + ")",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-        if(managerLogin && !user.role.equals("manager")){
-            Toast.makeText(this, "Access denied — Manager only", Toast.LENGTH_SHORT).show();
-            return;
-        }
+                LoginResponse data = response.body();
+                String role = data.user != null ? data.user.role : "";
 
-        if(user.role.equals("manager")){
-            startActivity(new Intent(this, ManagerDashboardActivity.class));
-        } else {
-            startActivity(new Intent(this, StaffDashboardActivity.class));
-        }
+                if (managerLogin && !"manager".equals(role)) {
+                    Toast.makeText(LoginActivity.this,
+                            "Access denied — Manager only",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-        Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
-        finish();
-    }
+                SharedPreferences prefs = getSharedPreferences("auth", MODE_PRIVATE);
+                prefs.edit()
+                        .putString("token", data.token)
+                        .putString("role", role)
+                        .putString("userId", data.user != null ? data.user.id : "")
+                        .putString("username", data.user != null ? data.user.username : "")
+                        .apply();
 
-    private void createDefaultManagerAccount(){
-        UserDao userDao = DatabaseClient.getInstance(this).getDatabase().userDao();
+                if ("manager".equals(role)) {
+                    startActivity(new Intent(LoginActivity.this, ManagerDashboardActivity.class));
+                } else {
+                    startActivity(new Intent(LoginActivity.this, StaffDashboardActivity.class));
+                }
 
-        if(userDao.getUserByUsername("admin") == null){
-            User admin = new User();
-            admin.name = "Administrator";
-            admin.email = "admin@cafe.com";
-            admin.username = "admin";
-            admin.password = "admin123";
-            admin.role = "manager";
+                Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                finish();
+            }
 
-            userDao.registerUser(admin);
-        }
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Toast.makeText(LoginActivity.this,
+                        "Network error: " + t.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
