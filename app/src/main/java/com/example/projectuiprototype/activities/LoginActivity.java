@@ -80,7 +80,6 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-    // 🔥 Creates default ADMIN only ONCE
     private void createDefaultManagerAccount(){
         UserDao userDao = DatabaseClient.getInstance(this).getDatabase().userDao();
 
@@ -92,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
             admin.password = "admin123";
             admin.role = "manager";
 
-            userDao.registerUser(admin); // Save in DB permanently
+            userDao.registerUser(admin);
         }
     }
 }
