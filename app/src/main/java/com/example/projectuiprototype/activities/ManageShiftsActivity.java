@@ -1,8 +1,6 @@
 package com.example.projectuiprototype.activities;
 
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -17,15 +15,20 @@ import com.example.projectuiprototype.dao.ShiftDao;
 import com.example.projectuiprototype.database.AppDatabase;
 import com.example.projectuiprototype.database.DatabaseClient;
 import com.example.projectuiprototype.models.Shift;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.List;
 
 public class ManageShiftsActivity extends AppCompatActivity {
 
-    private EditText etShiftName;
-    private EditText etShiftTime;
-    private Button btnAddShift;
-    private Button btnViewShifts;
+    // New fields (from the new XML)
+    private TextInputEditText etPosition;
+    private TextInputEditText etStartTime;
+    private TextInputEditText etEndTime;
+
+    private MaterialButton btnAddShift;
+    private MaterialButton btnViewShifts;
 
     private ShiftDao shiftDao;
 
@@ -43,8 +46,10 @@ public class ManageShiftsActivity extends AppCompatActivity {
         });
 
         // --- views from XML ---
-        etShiftName = findViewById(R.id.etShiftName);
-        etShiftTime = findViewById(R.id.etShiftTime);
+        etPosition = findViewById(R.id.etPosition);
+        etStartTime = findViewById(R.id.etStartTime);
+        etEndTime = findViewById(R.id.etEndTime);
+
         btnAddShift = findViewById(R.id.btnAddShift);
         btnViewShifts = findViewById(R.id.btnViewShifts);
 
@@ -56,32 +61,41 @@ public class ManageShiftsActivity extends AppCompatActivity {
 
         // ========== ADD SHIFT ==========
         btnAddShift.setOnClickListener(v -> {
-            String name = etShiftName.getText().toString().trim();
-            String time = etShiftTime.getText().toString().trim();
+            String position = getText(etPosition);
+            String start = getText(etStartTime);
+            String end = getText(etEndTime);
 
-            if (name.isEmpty()) {
-                etShiftName.setError("Shift name required");
+            if (position.isEmpty()) {
+                etPosition.setError("Position required");
+                etPosition.requestFocus();
                 return;
             }
-            if (time.isEmpty()) {
-                etShiftTime.setError("Shift time required");
+            if (start.isEmpty()) {
+                etStartTime.setError("Start time required");
+                etStartTime.requestFocus();
+                return;
+            }
+            if (end.isEmpty()) {
+                etEndTime.setError("End time required");
+                etEndTime.requestFocus();
                 return;
             }
 
-            // build Shift entity
+            // Store start-end in the single 'time' field you already have
+            String timeRange = start + " - " + end;
+
             Shift shift = new Shift();
-            shift.day = name;   // store the "Shift Name" into 'day'
-            shift.time = time;
-            shift.userId = 1;   // or the logged-in user id if you have it
+            shift.day = position;     // reuse 'day' as "Position"
+            shift.time = timeRange;   // store "Start - End"
+            shift.userId = 1;         // replace with your logged-in user id if you have it
 
-            // allowMainThreadQueries() is enabled in DatabaseClient,
-            // so this is okay for a small demo
             shiftDao.addShift(shift);
 
             Toast.makeText(this, "Shift added", Toast.LENGTH_SHORT).show();
 
-            etShiftName.setText("");
-            etShiftTime.setText("");
+            etPosition.setText("");
+            etStartTime.setText("");
+            etEndTime.setText("");
         });
 
         // ========== VIEW ALL SHIFTS ==========
@@ -98,17 +112,21 @@ public class ManageShiftsActivity extends AppCompatActivity {
             for (Shift s : shifts) {
                 sb.append(index++)
                         .append(". ")
-                        .append(s.day)   // show the name/day
-                        .append(" – ")
-                        .append(s.time)  // show the time
+                        .append(s.day)     // Position
+                        .append(" — ")
+                        .append(s.time)    // Start - End
                         .append("\n");
             }
 
             new AlertDialog.Builder(this)
-                    .setTitle("All Shifts (from database)")
+                    .setTitle("All Shifts")
                     .setMessage(sb.toString())
                     .setPositiveButton("OK", null)
                     .show();
         });
+    }
+
+    private String getText(TextInputEditText editText) {
+        return editText.getText() == null ? "" : editText.getText().toString().trim();
     }
 }

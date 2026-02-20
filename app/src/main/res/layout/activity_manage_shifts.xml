@@ -1,60 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/image"
+    android:fillViewport="true"
     android:padding="20dp">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Manage Shifts"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            android:textColor="#3C2A21"
-            android:layout_gravity="center_horizontal"
-            android:paddingBottom="20dp"/>
-
-        <EditText
-            android:id="@+id/etShiftName"
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Shift Name"
-            android:padding="12dp"
-            android:background="@android:drawable/edit_text"
-            android:layout_marginBottom="12dp"/>
+            android:layout_marginTop="30dp"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="8dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="#1F000000">
 
-        <EditText
-            android:id="@+id/etShiftTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Shift Time"
-            android:padding="12dp"
-            android:background="@android:drawable/edit_text"
-            android:layout_marginBottom="12dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp"
+                android:background="#CCFFFFFF">
 
-        <Button
-            android:id="@+id/btnAddShift"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Add Shift"
-            android:backgroundTint="#F4A261"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="16dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:paddingBottom="14dp"
+                    android:text="Manage Shifts"
+                    android:textColor="#2B1B12"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btnViewShifts"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="View All Shifts"
-            android:backgroundTint="#3C2A21"
-            android:textColor="#FFFFFF"/>
+                <!-- Position -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:hint="Position (e.g., Cashier)"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusBottomEnd="14dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPosition"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:padding="12dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Start Time -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:hint="Start Time (e.g., 9:00 AM)"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusBottomEnd="14dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etStartTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:padding="12dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- End Time -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:hint="End Time (e.g., 5:00 PM)"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusBottomEnd="14dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etEndTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:padding="12dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAddShift"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginBottom="12dp"
+                    android:backgroundTint="#F4A261"
+                    android:text="Add Shift"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    app:cornerRadius="14dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnViewShifts"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:backgroundTint="#3C2A21"
+                    android:text="View All Shifts"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    app:cornerRadius="14dp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 </ScrollView>
