@@ -3,6 +3,8 @@ package com.example.projectuiprototype.activities;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -48,7 +50,6 @@ public class ManageShiftsActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Views
         etDate = findViewById(R.id.etDate);
         etPosition = findViewById(R.id.etPosition);
         etStartTime = findViewById(R.id.etStartTime);
@@ -57,20 +58,15 @@ public class ManageShiftsActivity extends AppCompatActivity {
         btnAddShift = findViewById(R.id.btnAddShift);
         btnViewShifts = findViewById(R.id.btnViewShifts);
 
-        // DB
         AppDatabase db = DatabaseClient.getInstance(getApplicationContext()).getDatabase();
         shiftDao = db.shiftDao();
 
-        // Pickers
         etDate.setOnClickListener(v -> showDatePicker());
         etStartTime.setOnClickListener(v -> showTimePicker(etStartTime));
         etEndTime.setOnClickListener(v -> showTimePicker(etEndTime));
 
-        // Add shift
         btnAddShift.setOnClickListener(v -> addShift());
-
-        // View shifts
-        btnViewShifts.setOnClickListener(v -> viewAllShifts());
+        btnViewShifts.setOnClickListener(v -> showShiftsDialog());
     }
 
     private void showDatePicker() {
@@ -82,7 +78,6 @@ public class ManageShiftsActivity extends AppCompatActivity {
         DatePickerDialog dialog = new DatePickerDialog(
                 this,
                 (view, year, month, dayOfMonth) -> {
-                    // ISO date: YYYY-MM-DD (best practice for databases)
                     String iso = String.format(Locale.US, "%04d-%02d-%02d",
                             year, (month + 1), dayOfMonth);
                     etDate.setText(iso);
@@ -90,9 +85,7 @@ public class ManageShiftsActivity extends AppCompatActivity {
                 y, m, d
         );
 
-        // Professional: prevent past scheduling (optional, but good)
         dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-
         dialog.show();
     }
 
@@ -103,22 +96,16 @@ public class ManageShiftsActivity extends AppCompatActivity {
 
         TimePickerDialog dialog = new TimePickerDialog(
                 this,
-                (view, selectedHour, selectedMinute) -> {
-                    // 12-hour display like "9:00 AM"
-                    String time = formatTo12Hour(selectedHour, selectedMinute);
-                    target.setText(time);
-                },
+                (view, selectedHour, selectedMinute) -> target.setText(formatTo12Hour(selectedHour, selectedMinute)),
                 hour, min,
-                false // false = 12-hour clock
+                false
         );
-
         dialog.show();
     }
 
     private String formatTo12Hour(int hour24, int minute) {
         int hour12 = hour24 % 12;
         if (hour12 == 0) hour12 = 12;
-
         String amPm = (hour24 < 12) ? "AM" : "PM";
         return String.format(Locale.US, "%d:%02d %s", hour12, minute, amPm);
     }
@@ -151,19 +138,9 @@ public class ManageShiftsActivity extends AppCompatActivity {
             return;
         }
 
-        // Store start-end in your existing 'time' field
-        String timeRange = start + " - " + end;
-
         Shift shift = new Shift();
-
-        // Keep DB unchanged:
-        // day field stores "DATE • POSITION"
         shift.day = date + " • " + position;
-
-        // time field stores "Start - End"
-        shift.time = timeRange;
-
-        // Your placeholder user
+        shift.time = start + " - " + end;
         shift.userId = 1;
 
         shiftDao.addShift(shift);
@@ -176,7 +153,8 @@ public class ManageShiftsActivity extends AppCompatActivity {
         etEndTime.setText("");
     }
 
-    private void viewAllShifts() {
+
+    private void showShiftsDialog() {
         List<Shift> shifts = shiftDao.getAllShifts();
 
         if (shifts == null || shifts.isEmpty()) {
@@ -184,22 +162,27 @@ public class ManageShiftsActivity extends AppCompatActivity {
             return;
         }
 
-        StringBuilder sb = new StringBuilder();
-        int index = 1;
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_shifts_list, null);
+        ListView listView = dialogView.findViewById(R.id.listShifts);
 
-        for (Shift s : shifts) {
-            sb.append(index++)
-                    .append(". ")
-                    .append(s.day)   // "DATE • POSITION"
-                    .append("\n   ")
-                    .append(s.time)  // "Start - End"
-                    .append("\n\n");
-        }
+        ShiftListAdapter adapter = new ShiftListAdapter(shifts, shift -> {
+            new AlertDialog.Builder(this)
+                    .setTitle("Delete shift?")
+                    .setMessage("Delete this shift?\n\n" + shift.day + "\n" + shift.time)
+                    .setPositiveButton("Delete", (d, which) -> {
+                        shiftDao.deleteShift(shift);
+                        Toast.makeText(this, "Shift deleted", Toast.LENGTH_SHORT).show();
+                        showShiftsDialog(); // refresh list after delete
+                    })
+                    .setNegativeButton("Cancel", null)
+                    .show();
+        });
+
+        listView.setAdapter(adapter);
 
         new AlertDialog.Builder(this)
-                .setTitle("All Shifts")
-                .setMessage(sb.toString())
-                .setPositiveButton("OK", null)
+                .setView(dialogView)
+                .setPositiveButton("Close", null)
                 .show();
     }
 

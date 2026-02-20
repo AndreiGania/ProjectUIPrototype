@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/image">
 
-    <!-- KPI / Today at a glance -->
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardKpis"
         android:layout_width="0dp"
@@ -33,7 +33,7 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <!-- Sales -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

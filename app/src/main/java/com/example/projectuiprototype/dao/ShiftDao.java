@@ -18,4 +18,8 @@ public interface ShiftDao {
 
     @Query("SELECT * FROM shifts")
     List<Shift> getAllShifts();
+
+    @androidx.room.Delete
+    void deleteShift(Shift shift);
+
 }

@@ -26,11 +26,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#CCFFFFFF"
+                android:background="#E6E2C7B8"
                 android:orientation="vertical"
                 android:padding="18dp">
 
-                <TextView
+            <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -40,41 +40,41 @@
                     android:textSize="26sp"
                     android:textStyle="bold" />
 
-                <!-- Date (tap to pick) -->
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
                     android:hint="Shift Date"
                     app:boxBackgroundMode="outline"
-                    app:boxCornerRadiusTopStart="14dp"
-                    app:boxCornerRadiusTopEnd="14dp"
-                    app:boxCornerRadiusBottomStart="14dp"
                     app:boxCornerRadiusBottomEnd="14dp"
-                    app:endIconMode="custom"
-                    app:endIconDrawable="@android:drawable/ic_menu_my_calendar">
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:endIconDrawable="@android:drawable/ic_menu_my_calendar"
+                    app:endIconMode="custom">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:focusable="false"
                         android:clickable="true"
+                        android:focusable="false"
                         android:inputType="none"
                         android:padding="12dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Position -->
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
                     android:hint="Position (e.g., Cashier)"
                     app:boxBackgroundMode="outline"
-                    app:boxCornerRadiusTopStart="14dp"
-                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusBottomEnd="14dp"
                     app:boxCornerRadiusBottomStart="14dp"
-                    app:boxCornerRadiusBottomEnd="14dp">
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusTopStart="14dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etPosition"
@@ -91,43 +91,43 @@
                     android:layout_marginBottom="12dp"
                     android:hint="Start Time"
                     app:boxBackgroundMode="outline"
-                    app:boxCornerRadiusTopStart="14dp"
-                    app:boxCornerRadiusTopEnd="14dp"
-                    app:boxCornerRadiusBottomStart="14dp"
                     app:boxCornerRadiusBottomEnd="14dp"
-                    app:endIconMode="custom"
-                    app:endIconDrawable="@android:drawable/ic_lock_idle_alarm">
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:endIconDrawable="@android:drawable/ic_lock_idle_alarm"
+                    app:endIconMode="custom">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etStartTime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:focusable="false"
                         android:clickable="true"
+                        android:focusable="false"
                         android:inputType="none"
                         android:padding="12dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- End Time (tap to pick) -->
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:hint="End Time"
                     app:boxBackgroundMode="outline"
-                    app:boxCornerRadiusTopStart="14dp"
-                    app:boxCornerRadiusTopEnd="14dp"
-                    app:boxCornerRadiusBottomStart="14dp"
                     app:boxCornerRadiusBottomEnd="14dp"
-                    app:endIconMode="custom"
-                    app:endIconDrawable="@android:drawable/ic_lock_idle_alarm">
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:endIconDrawable="@android:drawable/ic_lock_idle_alarm"
+                    app:endIconMode="custom">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etEndTime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:focusable="false"
                         android:clickable="true"
+                        android:focusable="false"
                         android:inputType="none"
                         android:padding="12dp" />
                 </com.google.android.material.textfield.TextInputLayout>

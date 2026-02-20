@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="All Shifts"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#2B1B12"
+        android:paddingBottom="10dp" />
+
+    <ListView
+        android:id="@+id/listShifts"
+        android:layout_width="match_parent"
+        android:layout_height="340dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dp" />
+</LinearLayout>

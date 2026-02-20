@@ -26,8 +26,7 @@ public class MyScheduleActivity extends AppCompatActivity {
 
     private ShiftDao shiftDao;
 
-    // For now, use a demo user id.
-    // In a full version you would pass the logged-in user's id here.
+
     private static final int DEMO_USER_ID = 1;
 
     @Override
@@ -45,13 +44,13 @@ public class MyScheduleActivity extends AppCompatActivity {
         tvScheduleContent = findViewById(R.id.tvScheduleContent);
         btnRequestChange = findViewById(R.id.btnRequestChange);
 
-        // Get DB + DAO
+
         AppDatabase db = DatabaseClient
                 .getInstance(getApplicationContext())
                 .getDatabase();
         shiftDao = db.shiftDao();
 
-        // Load the schedule for this user
+
         loadSchedule();
 
         // Keep your existing request-change dialog

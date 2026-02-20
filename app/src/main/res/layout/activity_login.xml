@@ -28,7 +28,7 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Title -->
+
             <TextView
                 android:id="@+id/loginTitle"
                 android:layout_width="match_parent"
@@ -40,10 +40,14 @@
                 android:paddingBottom="12dp"
                 android:textStyle="bold" />
 
-            <!-- Username Field -->
+
             <com.google.android.material.textfield.TextInputLayout
+                app:boxStrokeWidthFocused="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:hintTextColor="@color/login_hint_color"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="#D4A017">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/usernameInput"
@@ -51,15 +55,18 @@
                     android:layout_height="wrap_content"
                     android:hint="Username"
                     android:inputType="textPersonName"
-                    android:textColorHint="@android:color/white"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    android:textColorHint="#F5E6C8" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Password Field -->
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                app:hintTextColor="@color/login_hint_color"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="#D4A017">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/passwordInput"
@@ -67,8 +74,8 @@
                     android:layout_height="wrap_content"
                     android:hint="Password"
                     android:inputType="textPassword"
-                    android:textColorHint="@android:color/white"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    android:textColorHint="#F5E6C8" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Sign In Button -->

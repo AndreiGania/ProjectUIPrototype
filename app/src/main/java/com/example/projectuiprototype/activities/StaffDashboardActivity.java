@@ -26,12 +26,12 @@ public class StaffDashboardActivity extends AppCompatActivity {
             return insets;
         });
 
-        // 🔹Link buttons to code (IDs must match your XML)
+
         Button btnViewAll = findViewById(R.id.btnViewAllAnnouncements);
         Button btnAnnouncements = findViewById(R.id.btnAnnouncements);
         Button btnInventory = findViewById(R.id.btnInventory);
 
-        //  Button: View All Announcements
+
         btnViewAll.setOnClickListener(v -> {
             Intent intent = new Intent(StaffDashboardActivity.this, AnnouncementsActivity.class);
             startActivity(intent);
@@ -39,13 +39,13 @@ public class StaffDashboardActivity extends AppCompatActivity {
 
 
 
-        //  Button: Announcements
+
         btnAnnouncements.setOnClickListener(v -> {
             Intent intent = new Intent(StaffDashboardActivity.this, AnnouncementsActivity.class);
             startActivity(intent);
         });
 
-        // Button: Inventory
+
         btnInventory.setOnClickListener(v -> {
             Intent intent = new Intent(StaffDashboardActivity.this, InventoryActivity.class);
             startActivity(intent);

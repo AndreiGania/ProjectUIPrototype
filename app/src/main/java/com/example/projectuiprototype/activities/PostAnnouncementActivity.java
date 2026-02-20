@@ -37,19 +37,19 @@ public class PostAnnouncementActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Views
+
         etTitle = findViewById(R.id.etTitle);
         etMessage = findViewById(R.id.etMessage);
         btnPublish = findViewById(R.id.btnPublish);
         btnCancel = findViewById(R.id.btnCancel);
 
-        // DB + DAO
+
         AppDatabase db = DatabaseClient
                 .getInstance(getApplicationContext())
                 .getDatabase();
         announcementDao = db.announcementDao();
 
-        // Publish button
+
         btnPublish.setOnClickListener(v -> {
             String title = etTitle.getText().toString().trim();
             String message = etMessage.getText().toString().trim();
@@ -63,13 +63,13 @@ public class PostAnnouncementActivity extends AppCompatActivity {
                 return;
             }
 
-            // Build Announcement entity
+
             Announcement a = new Announcement();
-            // change these if your fields are named differently
+
             a.title = title;
             a.message = message;
 
-            // Save to database
+
             announcementDao.postAnnouncement(a);
 
             Toast.makeText(this, "Announcement published", Toast.LENGTH_SHORT).show();
@@ -77,13 +77,13 @@ public class PostAnnouncementActivity extends AppCompatActivity {
             etTitle.setText("");
             etMessage.setText("");
 
-            // Go straight to the Announcements screen
+
             Intent intent = new Intent(PostAnnouncementActivity.this, AnnouncementsActivity.class);
             startActivity(intent);
             finish();
         });
 
-        // Cancel button
+
         btnCancel.setOnClickListener(v -> finish());
     }
 }
