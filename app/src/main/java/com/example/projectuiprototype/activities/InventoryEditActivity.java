@@ -12,6 +12,8 @@ import com.example.projectuiprototype.api.ApiClient;
 import com.example.projectuiprototype.api.InventoryApi;
 import com.example.projectuiprototype.api.InventoryItemDto;
 
+import java.text.DecimalFormat;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,10 +22,13 @@ public class InventoryEditActivity extends AppCompatActivity {
 
     EditText itemName, itemQty;
     Button saveBtn;
+    Button btnQtyMinus, btnQtyPlus;
 
     private String editingId = null;
-
     private InventoryApi inventoryApi;
+
+    private static final double STEP = 1.0;
+    private final DecimalFormat df = new DecimalFormat("0.##");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,23 +39,46 @@ public class InventoryEditActivity extends AppCompatActivity {
         itemQty  = findViewById(R.id.inputQty);
         saveBtn  = findViewById(R.id.btnSaveItem);
 
+        btnQtyMinus = findViewById(R.id.btnQtyMinus);
+        btnQtyPlus  = findViewById(R.id.btnQtyPlus);
+
         inventoryApi = ApiClient.getClient(this).create(InventoryApi.class);
 
         if (getIntent().hasExtra("id")) {
             editingId = getIntent().getStringExtra("id");
             itemName.setText(getIntent().getStringExtra("name"));
 
-            // qty might be sent as double now; handle both cases safely
             if (getIntent().hasExtra("qty")) {
-                try {
-                    itemQty.setText(String.valueOf(getIntent().getDoubleExtra("qty", 0)));
-                } catch (Exception e) {
-                    itemQty.setText(getIntent().getStringExtra("qty"));
-                }
+                double q = getIntent().getDoubleExtra("qty", 0);
+                itemQty.setText(df.format(q));
             }
         }
 
+        btnQtyPlus.setOnClickListener(v -> {
+            double current = getQtyValue();
+            current += STEP;
+            setQtyValue(current);
+        });
+
+        btnQtyMinus.setOnClickListener(v -> {
+            double current = getQtyValue();
+            current = Math.max(0, current - STEP);
+            setQtyValue(current);
+        });
+
         saveBtn.setOnClickListener(v -> save());
+    }
+
+    private double getQtyValue() {
+        try {
+            return Double.parseDouble(itemQty.getText().toString());
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    private void setQtyValue(double v) {
+        itemQty.setText(df.format(v));
     }
 
     private void save() {
@@ -78,34 +106,26 @@ public class InventoryEditActivity extends AppCompatActivity {
             inventoryApi.addItem(payload).enqueue(new Callback<InventoryItemDto>() {
                 @Override
                 public void onResponse(Call<InventoryItemDto> call, Response<InventoryItemDto> response) {
-                    if (!response.isSuccessful()) {
-                        Toast.makeText(InventoryEditActivity.this, "Add failed: " + response.code(), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
                     Toast.makeText(InventoryEditActivity.this, "Item added!", Toast.LENGTH_SHORT).show();
                     finish();
                 }
 
                 @Override
                 public void onFailure(Call<InventoryItemDto> call, Throwable t) {
-                    Toast.makeText(InventoryEditActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InventoryEditActivity.this, "Network error", Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
             inventoryApi.updateItem(editingId, payload).enqueue(new Callback<InventoryItemDto>() {
                 @Override
                 public void onResponse(Call<InventoryItemDto> call, Response<InventoryItemDto> response) {
-                    if (!response.isSuccessful()) {
-                        Toast.makeText(InventoryEditActivity.this, "Update failed: " + response.code(), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
                     Toast.makeText(InventoryEditActivity.this, "Item updated!", Toast.LENGTH_SHORT).show();
                     finish();
                 }
 
                 @Override
                 public void onFailure(Call<InventoryItemDto> call, Throwable t) {
-                    Toast.makeText(InventoryEditActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InventoryEditActivity.this, "Network error", Toast.LENGTH_SHORT).show();
                 }
             });
         }

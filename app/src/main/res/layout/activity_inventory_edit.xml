@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/image"
@@ -8,13 +10,13 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/editCard"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="28dp"
-        android:padding="22dp"
+        android:layout_width="344dp"
+        android:layout_height="363dp"
+        android:layout_margin="26dp"
         app:cardBackgroundColor="#3C2A21"
         app:cardCornerRadius="22dp"
         app:cardElevation="10dp"
+        app:contentPadding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,51 +32,116 @@
                 android:id="@+id/pa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
                 android:gravity="center"
-                android:padding="50dp"
+                android:paddingVertical="10dp"
                 android:text="Add/Update Inventory"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <!-- NAME -->
+            <!-- SUBTITLE -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:text="Enter item name and quantity"
+                android:textColor="#CFC7C3"
+                android:textSize="13sp" />
+
+            <!-- ITEM NAME -->
             <EditText
                 android:id="@+id/inputName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginBottom="12dp"
-                android:backgroundTint="#FFFFFF"
+                android:background="@drawable/bg_input_round"
                 android:hint="Item Name"
-                android:minHeight="48dp"
-                android:padding="10dp"
+                android:inputType="text"
+                android:paddingHorizontal="16dp"
+                android:singleLine="true"
                 android:textColor="@android:color/white"
                 android:textColorHint="#BDBDBD" />
 
-            <!-- QUANTITY -->
-            <EditText
-                android:id="@+id/inputQty"
+            <!-- QUANTITY LABEL -->
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:text="Quantity"
+                android:textColor="#CFC7C3"
+                android:textSize="13sp" />
+
+            <!-- QUANTITY STEPPER -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
                 android:layout_marginBottom="18dp"
-                android:backgroundTint="#FFFFFF"
-                android:hint="Quantity"
-                android:inputType="number"
-                android:minHeight="48dp"
-                android:padding="10dp"
-                android:textColor="@android:color/white"
-                android:textColorHint="#BDBDBD" />
+                android:background="@drawable/bg_stepper_container"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <!-- MINUS -->
+                <Button
+                    android:id="@+id/btnQtyMinus"
+                    android:layout_width="64dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_stepper_circle"
+                    android:backgroundTint="@null"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="-"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <!-- QTY VALUE -->
+                <EditText
+                    android:id="@+id/inputQty"
+                    android:layout_width="136dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:hint="0"
+                    android:inputType="numberDecimal"
+                    android:singleLine="true"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="#BDBDBD"
+                    android:textSize="16sp"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <!-- PLUS -->
+                <Button
+                    android:id="@+id/btnQtyPlus"
+                    android:layout_width="64dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_stepper_circle"
+                    android:backgroundTint="@null"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="+"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
             <!-- SAVE BUTTON -->
             <Button
                 android:id="@+id/btnSaveItem"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#D4A017"
-                android:minHeight="50dp"
-                android:padding="10dp"
+                android:layout_height="54dp"
+                android:background="@drawable/bg_save_pill"
+                android:backgroundTint="@null"
                 android:text="Save"
+                android:textAllCaps="false"
                 android:textColor="@android:color/white"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
