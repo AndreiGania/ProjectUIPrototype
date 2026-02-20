@@ -1,8 +1,10 @@
 package com.example.projectuiprototype.activities;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
@@ -12,22 +14,29 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.projectuiprototype.R;
-import com.example.projectuiprototype.dao.ShiftDao;
-import com.example.projectuiprototype.database.AppDatabase;
-import com.example.projectuiprototype.database.DatabaseClient;
-import com.example.projectuiprototype.models.Shift;
+import com.example.projectuiprototype.api.ApiClient;
+import com.example.projectuiprototype.api.ShiftApi;
+import com.example.projectuiprototype.api.ShiftDto;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MyScheduleActivity extends AppCompatActivity {
 
     private TextView tvScheduleContent;
     private Button btnRequestChange;
 
-    private ShiftDao shiftDao;
+    private ShiftApi shiftApi;
 
-
-    private static final int DEMO_USER_ID = 1;
+    private String myUserId;      // Mongo user.id string from login response
+    private String myUsername;    // username from login response
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +53,21 @@ public class MyScheduleActivity extends AppCompatActivity {
         tvScheduleContent = findViewById(R.id.tvScheduleContent);
         btnRequestChange = findViewById(R.id.btnRequestChange);
 
+        // ✅ Pull logged-in user from SharedPreferences (saved in LoginActivity)
+        SharedPreferences prefs = getSharedPreferences("auth", MODE_PRIVATE);
+        myUserId = prefs.getString("userId", null);
+        myUsername = prefs.getString("username", null);
 
-        AppDatabase db = DatabaseClient
-                .getInstance(getApplicationContext())
-                .getDatabase();
-        shiftDao = db.shiftDao();
+        if (myUserId == null || myUserId.isEmpty()) {
+            Toast.makeText(this, "Missing user info. Please login again.", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
 
+        // ✅ Retrofit API (token auto-attached by ApiClient interceptor)
+        shiftApi = ApiClient.getClient(getApplicationContext()).create(ShiftApi.class);
 
-        loadSchedule();
+        loadScheduleFromServer();
 
         // Keep your existing request-change dialog
         btnRequestChange.setOnClickListener(v -> {
@@ -63,22 +79,87 @@ public class MyScheduleActivity extends AppCompatActivity {
         });
     }
 
-    private void loadSchedule() {
-        List<Shift> shifts = shiftDao.getShiftsForUser(DEMO_USER_ID);
+    private void loadScheduleFromServer() {
+        tvScheduleContent.setText("Loading schedule...");
 
-        if (shifts == null || shifts.isEmpty()) {
-            tvScheduleContent.setText("You have no shifts scheduled yet.");
-            return;
+        shiftApi.getShifts().enqueue(new Callback<List<ShiftDto>>() {
+            @Override
+            public void onResponse(Call<List<ShiftDto>> call, Response<List<ShiftDto>> response) {
+                if (!response.isSuccessful() || response.body() == null) {
+                    tvScheduleContent.setText("Failed to load schedule (" + response.code() + ")");
+                    return;
+                }
+
+                List<ShiftDto> all = response.body();
+
+                StringBuilder sb = new StringBuilder();
+                int count = 0;
+
+                for (ShiftDto s : all) {
+                    if (s == null) continue;
+
+                    // Only show shifts for THIS logged-in user
+                    if (s.employeeId != null && s.employeeId.equals(myUserId)) {
+                        String niceDate = (s.start != null) ? formatDateNice(s.start) : "Unknown date";
+                        String niceStart = (s.start != null) ? formatTimeNice(s.start) : "?";
+                        String niceEnd = (s.end != null) ? formatTimeNice(s.end) : "?";
+
+                        String who = (myUsername != null && !myUsername.isEmpty())
+                                ? myUsername
+                                : (s.employeeUsername != null ? s.employeeUsername : "Me");
+
+                        sb.append(who)
+                                .append(" • ")
+                                .append(niceDate)
+                                .append(" — ")
+                                .append(niceStart)
+                                .append(" - ")
+                                .append(niceEnd)
+                                .append("\n\n");
+
+                        count++;
+                    }
+                }
+
+                if (count == 0) {
+                    tvScheduleContent.setText("You have no shifts scheduled yet.");
+                } else {
+                    tvScheduleContent.setText(sb.toString().trim());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ShiftDto>> call, Throwable t) {
+                tvScheduleContent.setText("Network error: " + t.getMessage());
+            }
+        });
+    }
+
+    private String formatDateNice(String iso) {
+        try {
+            SimpleDateFormat inFmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
+            inFmt.setTimeZone(TimeZone.getTimeZone("UTC"));
+            Date d = inFmt.parse(iso);
+
+            SimpleDateFormat outFmt = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
+            outFmt.setTimeZone(TimeZone.getDefault());
+            return outFmt.format(d);
+        } catch (Exception e) {
+            return iso;
         }
+    }
 
-        StringBuilder sb = new StringBuilder();
-        for (Shift shift : shifts) {
-            sb.append(shift.day)      // e.g. "Monday" or "Morning Shift"
-                    .append(" – ")
-                    .append(shift.time)     // e.g. "9:00 AM – 5:00 PM"
-                    .append("\n");
+    private String formatTimeNice(String iso) {
+        try {
+            SimpleDateFormat inFmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
+            inFmt.setTimeZone(TimeZone.getTimeZone("UTC"));
+            Date d = inFmt.parse(iso);
+
+            SimpleDateFormat outFmt = new SimpleDateFormat("h:mm a", Locale.US);
+            outFmt.setTimeZone(TimeZone.getDefault());
+            return outFmt.format(d);
+        } catch (Exception e) {
+            return iso;
         }
-
-        tvScheduleContent.setText(sb.toString());
     }
 }
