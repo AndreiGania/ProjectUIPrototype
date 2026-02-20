@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");//test
 const authRoutes = require("./routes/auth");
+const shiftsRoutes = require("./routes/shift");
+const userRoutes = require("./routes/users");
 const auth = require("./middleware/auth");
 const inventoryRoutes = require("./routes/inventory");
 
@@ -12,9 +14,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
+app.use("/users", auth, userRoutes);
 app.use("/auth", authRoutes);
 app.use("/inventory", auth, inventoryRoutes);
+app.use("/shifts", auth, shiftsRoutes);
 
 //test
 function authMiddleware(req, res, next) {
