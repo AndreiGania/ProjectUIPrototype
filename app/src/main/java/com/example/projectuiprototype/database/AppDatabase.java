@@ -10,7 +10,7 @@ import com.example.projectuiprototype.models.Shift;
 
 import com.example.projectuiprototype.dao.*;
 
-@Database(entities = {User.class, InventoryItem.class, Announcement.class, Shift.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, InventoryItem.class, Announcement.class, Shift.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract UserDao userDao();
