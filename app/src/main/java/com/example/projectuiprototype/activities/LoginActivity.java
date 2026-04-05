@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText usernameInput, passwordInput;
     Button loginButton, loginManagerButton, regButton;
+    TextView forgotPassword;
 
     private AuthApi authApi;
 
@@ -31,22 +33,25 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // API client
         authApi = ApiClient.getClient(this).create(AuthApi.class);
-
 
         usernameInput = findViewById(R.id.usernameInput);
         passwordInput = findViewById(R.id.passwordInput);
 
-        loginButton        = findViewById(R.id.signInButton);
+        loginButton = findViewById(R.id.signInButton);
         loginManagerButton = findViewById(R.id.managerSignButton);
-        regButton          = findViewById(R.id.registerButton);
+        regButton = findViewById(R.id.registerButton);
+        forgotPassword = findViewById(R.id.forgotPassword);
 
         loginButton.setOnClickListener(v -> login(false));
         loginManagerButton.setOnClickListener(v -> login(true));
 
         regButton.setOnClickListener(v ->
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class))
+        );
+
+        forgotPassword.setOnClickListener(v ->
+                startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class))
         );
     }
 

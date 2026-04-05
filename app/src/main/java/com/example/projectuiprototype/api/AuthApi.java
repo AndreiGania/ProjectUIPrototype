@@ -11,4 +11,7 @@ public interface AuthApi {
 
     @POST("auth/register")
     Call<RegisterResponse> register(@Body RegisterRequest request);
+
+    @POST("auth/forgot-password")
+    Call<ForgotPasswordResponse> forgotPassword(@Body ForgotPasswordRequest request);
 }
