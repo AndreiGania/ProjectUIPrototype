@@ -31,7 +31,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         authApi = ApiClient.getClient(this).create(AuthApi.class);
 
-
         fullName   = findViewById(R.id.fullName);
         emailAdd   = findViewById(R.id.emailAdd);
         userInput  = findViewById(R.id.UserInput);
@@ -73,12 +72,22 @@ public class RegisterActivity extends AppCompatActivity {
         authApi.register(req).enqueue(new Callback<RegisterResponse>() {
             @Override
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
+                registerBtn.setEnabled(true);
+                registerBtn.setText("Register");
+
                 if (!response.isSuccessful()) {
-                    registerBtn.setEnabled(true);
-                    registerBtn.setText("Register");
+                    String errorMessage;
+
+                    if (response.code() == 409) {
+                        errorMessage = "Email is already registered.";
+                    } else if (response.code() == 400) {
+                        errorMessage = "Please fill in all fields correctly.";
+                    } else {
+                        errorMessage = "Registration failed. Please try again.";
+                    }
 
                     Toast.makeText(RegisterActivity.this,
-                            "Register failed (" + response.code() + ")",
+                            errorMessage,
                             Toast.LENGTH_SHORT).show();
                     return;
                 }

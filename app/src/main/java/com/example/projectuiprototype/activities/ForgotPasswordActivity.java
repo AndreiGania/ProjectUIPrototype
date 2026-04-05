@@ -1,5 +1,6 @@
 package com.example.projectuiprototype.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +21,7 @@ import retrofit2.Response;
 public class ForgotPasswordActivity extends AppCompatActivity {
 
     private EditText emailInput;
-    private Button sendResetButton;
+    private Button sendResetButton, backToLoginButton;
     private AuthApi authApi;
 
     @Override
@@ -30,10 +31,17 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         emailInput = findViewById(R.id.emailInput);
         sendResetButton = findViewById(R.id.sendResetButton);
+        backToLoginButton = findViewById(R.id.backToLoginButton);
 
         authApi = ApiClient.getClient(this).create(AuthApi.class);
 
         sendResetButton.setOnClickListener(v -> sendResetEmail());
+
+        backToLoginButton.setOnClickListener(v -> {
+            Intent intent = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        });
     }
 
     private void sendResetEmail() {
