@@ -8,7 +8,7 @@ const shiftsRoutes = require("./routes/shift");
 const userRoutes = require("./routes/users");
 const auth = require("./middleware/auth");
 const inventoryRoutes = require("./routes/inventory");
-
+const announceRoutes = require("./routes/announcements");
 const app = express();
 
 app.use(cors());
@@ -18,6 +18,7 @@ app.use("/users", auth, userRoutes);
 app.use("/auth", authRoutes);
 app.use("/inventory", auth, inventoryRoutes);
 app.use("/shifts", auth, shiftsRoutes);
+app.use("/announcements", auth, announceRoutes );
 
 //test
 function authMiddleware(req, res, next) {

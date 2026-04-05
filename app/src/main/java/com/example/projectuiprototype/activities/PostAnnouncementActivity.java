@@ -13,17 +13,20 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.projectuiprototype.R;
-import com.example.projectuiprototype.dao.AnnouncementDao;
-import com.example.projectuiprototype.database.AppDatabase;
-import com.example.projectuiprototype.database.DatabaseClient;
-import com.example.projectuiprototype.models.Announcement;
+import com.example.projectuiprototype.api.AnnouncementApi;
+import com.example.projectuiprototype.api.AnnouncementDto;
+import com.example.projectuiprototype.api.ApiClient;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PostAnnouncementActivity extends AppCompatActivity {
 
     private EditText etTitle, etMessage;
     private Button btnPublish, btnCancel;
 
-    private AnnouncementDao announcementDao;
+    private AnnouncementApi announcementApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,53 +40,64 @@ public class PostAnnouncementActivity extends AppCompatActivity {
             return insets;
         });
 
-
         etTitle = findViewById(R.id.etTitle);
         etMessage = findViewById(R.id.etMessage);
         btnPublish = findViewById(R.id.btnPublish);
         btnCancel = findViewById(R.id.btnCancel);
 
+        announcementApi = ApiClient.getClient(this).create(AnnouncementApi.class);
 
-        AppDatabase db = DatabaseClient
-                .getInstance(getApplicationContext())
-                .getDatabase();
-        announcementDao = db.announcementDao();
-
-
-        btnPublish.setOnClickListener(v -> {
-            String title = etTitle.getText().toString().trim();
-            String message = etMessage.getText().toString().trim();
-
-            if (title.isEmpty()) {
-                etTitle.setError("Title required");
-                return;
-            }
-            if (message.isEmpty()) {
-                etMessage.setError("Message required");
-                return;
-            }
-
-
-            Announcement a = new Announcement();
-
-            a.title = title;
-            a.message = message;
-
-
-            announcementDao.postAnnouncement(a);
-
-            Toast.makeText(this, "Announcement published", Toast.LENGTH_SHORT).show();
-
-            etTitle.setText("");
-            etMessage.setText("");
-
-
-            Intent intent = new Intent(PostAnnouncementActivity.this, AnnouncementsActivity.class);
-            startActivity(intent);
-            finish();
-        });
-
+        btnPublish.setOnClickListener(v -> publishAnnouncement());
 
         btnCancel.setOnClickListener(v -> finish());
+    }
+
+    private void publishAnnouncement() {
+        String title = etTitle.getText().toString().trim();
+        String message = etMessage.getText().toString().trim();
+
+        if (title.isEmpty()) {
+            etTitle.setError("Title required");
+            return;
+        }
+
+        if (message.isEmpty()) {
+            etMessage.setError("Message required");
+            return;
+        }
+
+        AnnouncementDto payload = new AnnouncementDto();
+        payload.title = title;
+        payload.message = message;
+
+        announcementApi.addAnnouncement(payload).enqueue(new Callback<AnnouncementDto>() {
+            @Override
+            public void onResponse(Call<AnnouncementDto> call, Response<AnnouncementDto> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(PostAnnouncementActivity.this,
+                            "Publish failed: " + response.code(),
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Toast.makeText(PostAnnouncementActivity.this,
+                        "Announcement published",
+                        Toast.LENGTH_SHORT).show();
+
+                etTitle.setText("");
+                etMessage.setText("");
+
+                Intent intent = new Intent(PostAnnouncementActivity.this, AnnouncementsActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
+            @Override
+            public void onFailure(Call<AnnouncementDto> call, Throwable t) {
+                Toast.makeText(PostAnnouncementActivity.this,
+                        "Network error: " + t.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
