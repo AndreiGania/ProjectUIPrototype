@@ -1,12 +1,26 @@
-\# PointSeven Cafe Management System
+\# ☕ PointSeven Cafe Management System
 
 
 
-\## Overview
+\## 📱 Mobile Application (Android)
 
-Mobile Application (Android):
 
-The system supports features such as authentication, inventory management, staff scheduling, announcements, and role-based access.
+
+The PointSeven Cafe Mobile App helps streamline cafe operations by providing tools for staff and managers to manage daily tasks efficiently.
+
+
+
+\### ✨ Features
+
+\- User Authentication (Login / Register)
+
+\- Inventory Management
+
+\- Staff Scheduling
+
+\- Announcements System
+
+\- Role-Based Access (Manager / Staff / Customer)
 
 
 
@@ -14,15 +28,11 @@ The system supports features such as authentication, inventory management, staff
 
 
 
-\# Mobile Application Setup (Android)
+\## 🚀 Getting Started
 
 
 
-\## Requirements
-
-\- Android Studio installed
-
-\- Backend server running
+Follow these steps to run the mobile application locally.
 
 
 
@@ -30,27 +40,107 @@ The system supports features such as authentication, inventory management, staff
 
 
 
-\## Start Backend (Required)
+\## 📋 Requirements
 
 
 
-Before running the mobile app, start the backend server:
+\- Android Studio
+
+\- Java (JDK 8 or higher)
+
+\- Node.js backend server
 
 
 
-\### Easy Method:
-
-1.Run start-backend.bat in project folder
-
-2\. Open \*\*Android Studio\*\*
-
-3\. Click \*\*"Open"\*\* and select the project folder
-
-4\. Wait for \*\*Gradle sync\*\* to complete
-
-5\. Start an \*\*Android Emulator\*\* or connect a physical Android device
-
-6\. Click the \*\*Run ▶️ button\*\* on top of android studio to launch the app 
+\---
 
 
+
+\## ⚙️ Start the Backend Server
+
+
+
+The mobile app requires the backend server to be running.
+
+
+
+\### Quick Start (Recommended)
+
+
+
+start-backend.bat
+
+
+
+\---
+
+
+
+\### Manual Setup (If script doesn’t work)
+
+
+
+cd backend
+
+npm install
+
+npm start
+
+
+
+\---
+
+
+
+\## 📱 Run the Mobile App
+
+
+
+1\. Open the project in Android Studio
+
+2\. Wait for Gradle to sync
+
+3\. Start an emulator or connect a device
+
+4\. Click Run ▶️
+
+
+
+\---
+
+
+
+\## ⚠️ Troubleshooting
+
+
+
+App cannot connect to backend:
+
+\- Ensure backend is running
+
+\- Verify API URL is correct
+
+\- Check firewall / port 3000
+
+
+
+Emulator issues:
+
+\- Android Studio → Device Manager → Wipe Data → Restart
+
+
+
+\---
+
+
+
+\## 📌 Notes
+
+
+
+\- Backend must be running before launching the app
+
+\- First run may take longer due to Gradle build
+
+\- Ensure .env file is configured for backend
 
