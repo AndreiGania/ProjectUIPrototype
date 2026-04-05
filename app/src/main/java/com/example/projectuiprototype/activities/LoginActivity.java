@@ -69,10 +69,27 @@ public class LoginActivity extends AppCompatActivity {
         authApi.login(req).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                if (!response.isSuccessful() || response.body() == null) {
-                    Toast.makeText(LoginActivity.this,
-                            "Login failed (" + response.code() + ")",
-                            Toast.LENGTH_SHORT).show();
+                if (!response.isSuccessful()) {
+                    String message = "Login failed";
+
+                    if (response.code() == 403) {
+                        message = "Please verify your email before logging in";
+                    } else if (response.code() == 401) {
+                        message = "Invalid username or password";
+                    }
+
+                    try {
+                        if (response.errorBody() != null) {
+                            String error = response.errorBody().string();
+                            if (error.contains("Verify email")) {
+                                message = "Please verify your email first";
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG).show();
                     return;
                 }
 
