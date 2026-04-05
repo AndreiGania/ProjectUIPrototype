@@ -59,6 +59,9 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        registerBtn.setEnabled(false);
+        registerBtn.setText("Creating account...");
+
         RegisterRequest req = new RegisterRequest(
                 name,
                 email,
@@ -71,7 +74,9 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                 if (!response.isSuccessful()) {
-                    // 409 = user exists, 400 = missing fields, etc.
+                    registerBtn.setEnabled(true);
+                    registerBtn.setText("Register");
+
                     Toast.makeText(RegisterActivity.this,
                             "Register failed (" + response.code() + ")",
                             Toast.LENGTH_SHORT).show();
@@ -79,14 +84,17 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 Toast.makeText(RegisterActivity.this,
-                        "Account created successfully!",
-                        Toast.LENGTH_SHORT).show();
+                        "Account created! Please verify your email before logging in.",
+                        Toast.LENGTH_LONG).show();
 
                 finish();
             }
 
             @Override
             public void onFailure(Call<RegisterResponse> call, Throwable t) {
+                registerBtn.setEnabled(true);
+                registerBtn.setText("Register");
+
                 Toast.makeText(RegisterActivity.this,
                         "Network error: " + t.getMessage(),
                         Toast.LENGTH_SHORT).show();

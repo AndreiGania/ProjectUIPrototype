@@ -15,6 +15,8 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+const BASE_URL = process.env.BASE_URL || "http://10.0.2.2:3000";
+
 // POST /auth/register
 router.post("/register", async (req, res) => {
   try {
@@ -30,22 +32,72 @@ router.post("/register", async (req, res) => {
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
+    const verificationToken = crypto.randomBytes(32).toString("hex");
 
     const user = await User.create({
       name,
       email,
       username,
       passwordHash,
-      role: role || "staff"
+      role: role || "staff",
+      isVerified: false,
+      emailVerificationToken: verificationToken
     });
 
-    res.status(201).json({
+    const verifyLink = `${BASE_URL}/auth/verify-email/${verificationToken}`;
+
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: user.email,
+      subject: "Verify your PointSeventhCafe account",
+      html: `
+        <p>Hello ${user.name},</p>
+        <p>Thanks for registering for PointSeventhCafe.</p>
+        <p>Please verify your email by clicking the link below:</p>
+        <a href="${verifyLink}">${verifyLink}</a>
+        <p>If you did not create this account, you can ignore this email.</p>
+      `
+    });
+
+    return res.status(201).json({
+      message: "Account created. Please verify your email before logging in.",
       id: user._id,
       username: user.username,
       role: user.role
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.log("REGISTER ERROR:", err.message);
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /auth/verify-email/:token
+router.get("/verify-email/:token", async (req, res) => {
+  try {
+    const { token } = req.params;
+
+    const user = await User.findOne({ emailVerificationToken: token });
+
+    if (!user) {
+      return res.status(400).send("Invalid verification token.");
+    }
+
+    user.isVerified = true;
+    user.emailVerificationToken = null;
+    await user.save();
+
+    return res.send(`
+      <html>
+        <body style="font-family: Arial; max-width: 500px; margin: 40px auto; text-align: center;">
+          <h2>Email Verified</h2>
+          <p>Your account has been verified successfully.</p>
+          <p>You can now return to the app and log in.</p>
+        </body>
+      </html>
+    `);
+  } catch (err) {
+    console.log("VERIFY EMAIL ERROR:", err.message);
+    return res.status(500).send("Server error");
   }
 });
 
@@ -66,6 +118,10 @@ router.post("/login", async (req, res) => {
     const ok = await bcrypt.compare(password, user.passwordHash);
     if (!ok) {
       return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    if (!user.isVerified) {
+      return res.status(403).json({ error: "Please verify your email before logging in" });
     }
 
     const token = jwt.sign(
@@ -112,7 +168,7 @@ router.post("/forgot-password", async (req, res) => {
     user.resetPasswordExpires = expiry;
     await user.save();
 
-    const resetLink = `http://localhost:3000/auth/reset-password/${resetToken}`;
+    const resetLink = `${BASE_URL}/auth/reset-password/${resetToken}`;
 
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
