@@ -27,7 +27,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- TITLE -->
             <TextView
                 android:id="@+id/pa"
                 android:layout_width="match_parent"
@@ -39,7 +38,6 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <!-- SUBTITLE -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,7 +48,6 @@
                 android:textColor="#CFC7C3"
                 android:textSize="13sp" />
 
-            <!-- ITEM NAME -->
             <EditText
                 android:id="@+id/inputName"
                 android:layout_width="match_parent"
@@ -64,7 +61,6 @@
                 android:textColor="@android:color/white"
                 android:textColorHint="#BDBDBD" />
 
-            <!-- QUANTITY LABEL -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -73,7 +69,6 @@
                 android:textColor="#CFC7C3"
                 android:textSize="13sp" />
 
-            <!-- QUANTITY STEPPER -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
@@ -83,22 +78,19 @@
                 android:orientation="horizontal"
                 android:padding="8dp">
 
-                <!-- MINUS -->
                 <Button
                     android:id="@+id/btnQtyMinus"
                     android:layout_width="64dp"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_stepper_circle"
                     android:backgroundTint="@null"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
+                    app:backgroundTint="@null"
                     android:text="-"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
-                <!-- QTY VALUE -->
                 <EditText
                     android:id="@+id/inputQty"
                     android:layout_width="136dp"
@@ -114,15 +106,13 @@
                     android:textSize="16sp"
                     tools:ignore="TouchTargetSizeCheck" />
 
-                <!-- PLUS -->
                 <Button
                     android:id="@+id/btnQtyPlus"
                     android:layout_width="64dp"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_stepper_circle"
                     android:backgroundTint="@null"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
+                    app:backgroundTint="@null"
                     android:text="+"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"
@@ -131,13 +121,13 @@
 
             </LinearLayout>
 
-            <!-- SAVE BUTTON -->
             <Button
                 android:id="@+id/btnSaveItem"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:background="@drawable/bg_save_pill"
                 android:backgroundTint="@null"
+                app:backgroundTint="@null"
                 android:text="Save"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"

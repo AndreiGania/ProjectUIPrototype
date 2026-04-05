@@ -23,7 +23,7 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
 
     EditText usernameInput, passwordInput;
-    Button loginButton, loginManagerButton, regButton;
+    Button loginButton, regButton;
     TextView forgotPassword;
 
     private AuthApi authApi;
@@ -39,12 +39,10 @@ public class LoginActivity extends AppCompatActivity {
         passwordInput = findViewById(R.id.passwordInput);
 
         loginButton = findViewById(R.id.signInButton);
-        loginManagerButton = findViewById(R.id.managerSignButton);
         regButton = findViewById(R.id.registerButton);
         forgotPassword = findViewById(R.id.forgotPassword);
 
-        loginButton.setOnClickListener(v -> login(false));
-        loginManagerButton.setOnClickListener(v -> login(true));
+        loginButton.setOnClickListener(v -> login());
 
         regButton.setOnClickListener(v ->
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class))
@@ -55,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         );
     }
 
-    private void login(boolean managerLogin) {
+    private void login() {
         String username = usernameInput.getText().toString().trim();
         String password = passwordInput.getText().toString().trim();
 
@@ -95,13 +93,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 LoginResponse data = response.body();
                 String role = data.user != null ? data.user.role : "";
-
-                if (managerLogin && !"manager".equals(role)) {
-                    Toast.makeText(LoginActivity.this,
-                            "Access denied — Manager only",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
 
                 SharedPreferences prefs = getSharedPreferences("auth", MODE_PRIVATE);
                 prefs.edit()
