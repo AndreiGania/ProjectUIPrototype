@@ -13,4 +13,7 @@ public interface AnnouncementApi {
 
     @POST("announcements")
     Call<AnnouncementDto> addAnnouncement(@Body AnnouncementDto announcement);
+
+    @GET("announcements/latest")
+    Call<AnnouncementDto> getLatestAnnouncement();
 }

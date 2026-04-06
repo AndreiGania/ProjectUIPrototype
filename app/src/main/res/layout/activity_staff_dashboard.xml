@@ -110,7 +110,9 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <!-- Title (this will stay "Announcements") -->
             <TextView
+                android:id="@+id/txtLatestAnnouncementTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Announcements"
@@ -118,12 +120,13 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
+            <!-- MESSAGE (this is dynamic now) -->
             <TextView
-                android:id="@+id/tvAnn2"
+                android:id="@+id/txtLatestAnnouncementMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:text="Seasonal menu launch on Monday"
+                android:text="Loading latest announcement..."
                 android:textColor="#BFAFA8"
                 android:textSize="14sp" />
 
