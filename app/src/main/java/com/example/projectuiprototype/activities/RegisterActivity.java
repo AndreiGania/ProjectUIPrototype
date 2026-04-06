@@ -1,6 +1,7 @@
 package com.example.projectuiprototype.activities;
 
 import android.os.Bundle;
+import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -31,10 +32,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         authApi = ApiClient.getClient(this).create(AuthApi.class);
 
-        fullName   = findViewById(R.id.fullName);
-        emailAdd   = findViewById(R.id.emailAdd);
-        userInput  = findViewById(R.id.UserInput);
-        passInput  = findViewById(R.id.PassInput);
+        fullName = findViewById(R.id.fullName);
+        emailAdd = findViewById(R.id.emailAdd);
+        userInput = findViewById(R.id.UserInput);
+        passInput = findViewById(R.id.PassInput);
         repeatPass = findViewById(R.id.repeatPass);
 
         registerBtn = findViewById(R.id.btn_registeracc);
@@ -42,19 +43,63 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
-        String name     = fullName.getText().toString().trim();
-        String email    = emailAdd.getText().toString().trim();
+        String name = fullName.getText().toString().trim();
+        String email = emailAdd.getText().toString().trim();
         String username = userInput.getText().toString().trim();
         String password = passInput.getText().toString().trim();
-        String confirm  = repeatPass.getText().toString().trim();
+        String confirm = repeatPass.getText().toString().trim();
 
-        if (name.isEmpty() || email.isEmpty() || username.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+        fullName.setError(null);
+        emailAdd.setError(null);
+        userInput.setError(null);
+        passInput.setError(null);
+        repeatPass.setError(null);
+
+        if (name.isEmpty()) {
+            fullName.setError("Enter your full name");
+            fullName.requestFocus();
+            return;
+        }
+
+        if (email.isEmpty()) {
+            emailAdd.setError("Enter your email");
+            emailAdd.requestFocus();
+            return;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailAdd.setError("Enter a valid email address");
+            emailAdd.requestFocus();
+            return;
+        }
+
+        if (username.isEmpty()) {
+            userInput.setError("Enter a username");
+            userInput.requestFocus();
+            return;
+        }
+
+        if (password.isEmpty()) {
+            passInput.setError("Enter a password");
+            passInput.requestFocus();
+            return;
+        }
+
+        if (password.length() < 6) {
+            passInput.setError("Password must be at least 6 characters");
+            passInput.requestFocus();
+            return;
+        }
+
+        if (confirm.isEmpty()) {
+            repeatPass.setError("Confirm your password");
+            repeatPass.requestFocus();
             return;
         }
 
         if (!password.equals(confirm)) {
-            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+            repeatPass.setError("Passwords do not match");
+            repeatPass.requestFocus();
             return;
         }
 
@@ -79,22 +124,24 @@ public class RegisterActivity extends AppCompatActivity {
                     String errorMessage;
 
                     if (response.code() == 409) {
-                        errorMessage = "Email is already registered.";
+                        errorMessage = "Email or username is already registered.";
                     } else if (response.code() == 400) {
-                        errorMessage = "Please fill in all fields correctly.";
+                        errorMessage = "Please enter a valid email and complete all fields.";
+                    } else if (response.code() == 500) {
+                        errorMessage = "Server error. Please try again.";
                     } else {
                         errorMessage = "Registration failed. Please try again.";
                     }
 
-                    Toast.makeText(RegisterActivity.this,
-                            errorMessage,
-                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                Toast.makeText(RegisterActivity.this,
+                Toast.makeText(
+                        RegisterActivity.this,
                         "Account created! Please verify your email before logging in.",
-                        Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_LONG
+                ).show();
 
                 finish();
             }
@@ -104,9 +151,11 @@ public class RegisterActivity extends AppCompatActivity {
                 registerBtn.setEnabled(true);
                 registerBtn.setText("Register");
 
-                Toast.makeText(RegisterActivity.this,
+                Toast.makeText(
+                        RegisterActivity.this,
                         "Network error: " + t.getMessage(),
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT
+                ).show();
             }
         });
     }

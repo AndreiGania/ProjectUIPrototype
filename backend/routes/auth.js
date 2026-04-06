@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 const User = require("../models/User");
-
+const dns = require("dns").promises;
 const router = express.Router();
 
 const transporter = nodemailer.createTransport({
@@ -24,6 +24,24 @@ router.post("/register", async (req, res) => {
 
     if (!name || !email || !username || !password) {
       return res.status(400).json({ error: "Missing fields" });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: "Invalid email format" });
+    }
+
+    const domain = email.split("@")[1];
+
+    try {
+      const records = await dns.resolveMx(domain);
+
+      if (!records || records.length === 0) {
+        return res.status(400).json({ error: "Invalid email domain" });
+      }
+    } catch (err) {
+      return res.status(400).json({ error: "Invalid email domain" });
     }
 
     const existing = await User.findOne({ $or: [{ email }, { username }] });
