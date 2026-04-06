@@ -19,35 +19,42 @@ public class ManagerDashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_manager_dashboard);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.cardKpis), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        Button postBtn = findViewById(R.id.btnPostAnnouncement);
+
+        Button btnManageShifts = findViewById(R.id.btnManageShifts);
+        Button btnPostAnnouncement = findViewById(R.id.btnPostAnnouncement);
+        Button btnViewAnnouncements = findViewById(R.id.btnViewAnnouncements);
         Button btnInventory = findViewById(R.id.btnInventory);
         Button btnManageUsers = findViewById(R.id.btnManageUsers);
 
-        postBtn.setOnClickListener(v -> {
+        btnManageShifts.setOnClickListener(v -> {
+            Intent intent = new Intent(ManagerDashboardActivity.this, ManageShiftsActivity.class);
+            startActivity(intent);
+        });
+
+        btnPostAnnouncement.setOnClickListener(v -> {
             Intent intent = new Intent(ManagerDashboardActivity.this, PostAnnouncementActivity.class);
             startActivity(intent);
         });
+
+        btnViewAnnouncements.setOnClickListener(v -> {
+            Intent intent = new Intent(ManagerDashboardActivity.this, AnnouncementsActivity.class);
+            startActivity(intent);
+        });
+
         btnInventory.setOnClickListener(v -> {
             Intent intent = new Intent(ManagerDashboardActivity.this, InventoryActivity.class);
             startActivity(intent);
         });
 
         btnManageUsers.setOnClickListener(v -> {
-            startActivity(new Intent(this, ManageUsersActivity.class));
-        });
-
-        Button btnManageShifts = findViewById(R.id.btnManageShifts);
-        btnManageShifts.setOnClickListener(v -> {
-            Intent intent = new Intent(ManagerDashboardActivity.this, ManageShiftsActivity.class);
+            Intent intent = new Intent(ManagerDashboardActivity.this, ManageUsersActivity.class);
             startActivity(intent);
         });
-
-
     }
-
 }
