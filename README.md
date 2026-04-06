@@ -54,6 +54,15 @@ npm start
 
 ---
 
+## 🔑 Demo Login Credentials
+
+Use the following admin account to access the system for testing:
+
+- **Username:** `admin`
+- **Password:** `admin123`
+
+---
+
 ## ⚠️ Troubleshooting
 
 App cannot connect to backend:
