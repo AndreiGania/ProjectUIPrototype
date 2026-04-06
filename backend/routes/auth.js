@@ -89,7 +89,7 @@ router.get("/verify-email/:token", async (req, res) => {
               margin: 0;
               font-family: Arial, sans-serif;
               background: linear-gradient(rgba(40, 24, 16, 0.78), rgba(40, 24, 16, 0.78)),
-                          url('/images/IMG_5925.jpg')
+                          url('/images/AKS06239.jpg')
                           no-repeat center center fixed;
               background-size: cover;
               display: flex;
@@ -169,7 +169,7 @@ router.get("/verify-email/:token", async (req, res) => {
             margin: 0;
             font-family: Arial, sans-serif;
             background: linear-gradient(rgba(40, 24, 16, 0.78), rgba(40, 24, 16, 0.78)),
-                        url('/images/IMG_5925.jpg')
+                        url('/images/AKS06239.jpg')
                         no-repeat center center fixed;
             background-size: cover;
             display: flex;
@@ -352,7 +352,7 @@ router.get("/reset-password/:token", (req, res) => {
           min-height: 100vh;
           background:
             linear-gradient(rgba(33, 20, 12, 0.72), rgba(33, 20, 12, 0.72)),
-            url('/images/IMG_5925.jpg')
+            url('/images/AKS06239.jpg')
             center/cover no-repeat;
           display: flex;
           align-items: center;
@@ -592,7 +592,7 @@ router.post("/reset-password/:token", express.urlencoded({ extended: true }), as
             min-height: 100vh;
             background:
               linear-gradient(rgba(33, 20, 12, 0.72), rgba(33, 20, 12, 0.72)),
-              url('/images/IMG_5925.jpg')
+              url('/images/AKS06239.jpg')
               center/cover no-repeat;
             display: flex;
             align-items: center;
