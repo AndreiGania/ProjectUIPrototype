@@ -8,8 +8,8 @@
     android:foreground="?attr/selectableItemBackground"
     app:cardBackgroundColor="#3C2A21"
     app:cardCornerRadius="18dp"
-    app:cardElevation="6dp"
-    app:contentPadding="12dp">
+    app:cardElevation="5dp"
+    app:contentPadding="14dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -22,61 +22,56 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Item Name"
+            android:text="Coffee Beans"
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/txtInvQty"
+            app:layout_constraintBottom_toTopOf="@+id/txtInvQty"
+            app:layout_constraintEnd_toStartOf="@+id/btnEditInv"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txtInvQty"
-            android:layout_width="56dp"
-            android:layout_height="36dp"
-            android:layout_marginEnd="36dp"
-            android:background="@drawable/bg_qty_pill"
-            android:gravity="center"
-            android:text="12"
-            android:textColor="#3C2A21"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnEditInv"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Qty: 12"
+            android:textColor="#E6D5C9"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtInvName"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <Button
             android:id="@+id/btnEditInv"
-            android:layout_width="78dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/bg_save_pill"
-            android:backgroundTint="@null"
+            android:layout_width="72dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="#83542A"
             android:text="Edit"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:textStyle="bold"
-            app:backgroundTint="@null"
+            app:cornerRadius="18dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnDeleteInv"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TouchTargetSizeCheck" />
 
-        <Button
+        <TextView
             android:id="@+id/btnDeleteInv"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@drawable/bg_stepper_circle"
-            android:backgroundTint="@null"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:gravity="center"
-            android:padding="0dp"
             android:text="✕"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
+            android:textColor="#F4D7C3"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

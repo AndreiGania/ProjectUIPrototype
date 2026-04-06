@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,12 +45,13 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.InvH
         InventoryItemDto item = items.get(pos);
 
         h.name.setText(item.name != null ? item.name : "");
-        h.qty.setText(String.valueOf(item.quantity));
+
+        // nicer quantity display
+        h.qty.setText("Qty: " + item.quantity);
 
         h.editBtn.setOnClickListener(v -> {
             Intent i = new Intent(context, InventoryEditActivity.class);
 
-            // Mongo uses _id string
             i.putExtra("id", item.id);
             i.putExtra("name", item.name);
             i.putExtra("qty", item.quantity);
@@ -70,7 +70,6 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.InvH
 
     private void deleteItemFromApi(InventoryItemDto item, int pos) {
         if (item.id == null || item.id.isEmpty()) {
-            Toast.makeText(context, "Missing item id", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -79,19 +78,15 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.InvH
         api.deleteItem(item.id).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if (!response.isSuccessful()) {
-                    Toast.makeText(context, "Delete failed: " + response.code(), Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                if (!response.isSuccessful()) return;
 
                 items.remove(pos);
                 notifyItemRemoved(pos);
-                Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(context, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                // optional: show toast if you want
             }
         });
     }
@@ -102,14 +97,18 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.InvH
     }
 
     static class InvHolder extends RecyclerView.ViewHolder {
-        TextView name, qty;
-        Button editBtn, deleteBtn;
+        TextView name, qty, deleteBtn;
+        Button editBtn;
 
         InvHolder(View v) {
             super(v);
+
             name = v.findViewById(R.id.txtInvName);
             qty = v.findViewById(R.id.txtInvQty);
+
             editBtn = v.findViewById(R.id.btnEditInv);
+
+            // 🔥 NOW TEXTVIEW (THIS FIXES YOUR CRASH)
             deleteBtn = v.findViewById(R.id.btnDeleteInv);
         }
     }

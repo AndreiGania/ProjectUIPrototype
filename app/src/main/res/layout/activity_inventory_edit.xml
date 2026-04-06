@@ -6,17 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/image"
-    android:padding="20dp">
+    android:padding="16dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/editCard"
-        android:layout_width="344dp"
-        android:layout_height="363dp"
-        android:layout_margin="26dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
         app:cardBackgroundColor="#3C2A21"
-        app:cardCornerRadius="22dp"
-        app:cardElevation="10dp"
-        app:contentPadding="20dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp"
+        app:contentPadding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,34 +32,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingVertical="10dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="8dp"
                 android:text="Add/Update Inventory"
                 android:textColor="@android:color/white"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="12dp"
                 android:gravity="center"
                 android:text="Enter item name and quantity"
                 android:textColor="#CFC7C3"
-                android:textSize="13sp" />
+                android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/inputName"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginBottom="12dp"
+                android:layout_height="46dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/bg_input_round"
                 android:hint="Item Name"
                 android:inputType="text"
-                android:paddingHorizontal="16dp"
+                android:paddingHorizontal="14dp"
                 android:singleLine="true"
                 android:textColor="@android:color/white"
-                android:textColorHint="#BDBDBD" />
+                android:textColorHint="#BDBDBD"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -67,33 +69,34 @@
                 android:layout_marginBottom="6dp"
                 android:text="Quantity"
                 android:textColor="#CFC7C3"
-                android:textSize="13sp" />
+                android:textSize="12sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:layout_marginBottom="18dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="14dp"
                 android:background="@drawable/bg_stepper_container"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="6dp">
 
                 <Button
                     android:id="@+id/btnQtyMinus"
-                    android:layout_width="64dp"
-                    android:layout_height="48dp"
+                    android:layout_width="52dp"
+                    android:layout_height="40dp"
                     android:background="@drawable/bg_stepper_circle"
                     android:backgroundTint="@null"
-                    app:backgroundTint="@null"
                     android:text="-"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="@null"
+                    tools:ignore="TouchTargetSizeCheck" />
 
                 <EditText
                     android:id="@+id/inputQty"
-                    android:layout_width="136dp"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
@@ -103,36 +106,37 @@
                     android:singleLine="true"
                     android:textColor="@android:color/white"
                     android:textColorHint="#BDBDBD"
-                    android:textSize="16sp"
+                    android:textSize="15sp"
                     tools:ignore="TouchTargetSizeCheck" />
 
                 <Button
                     android:id="@+id/btnQtyPlus"
-                    android:layout_width="64dp"
-                    android:layout_height="48dp"
+                    android:layout_width="52dp"
+                    android:layout_height="40dp"
                     android:background="@drawable/bg_stepper_circle"
                     android:backgroundTint="@null"
-                    app:backgroundTint="@null"
                     android:text="+"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="@null"
+                    tools:ignore="TouchTargetSizeCheck" />
 
             </LinearLayout>
 
             <Button
                 android:id="@+id/btnSaveItem"
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
+                android:layout_height="48dp"
                 android:background="@drawable/bg_save_pill"
                 android:backgroundTint="@null"
-                app:backgroundTint="@null"
                 android:text="Save"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:backgroundTint="@null" />
 
         </LinearLayout>
 
