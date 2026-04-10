@@ -1,5 +1,6 @@
 package com.example.projectuiprototype.activities;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
+
 
     public interface OnRefresh {
         void refresh();
@@ -56,14 +58,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         String role = (user.role == null) ? "" : user.role;
         holder.txtUserRow.setText(user.username + " (" + role + ")");
 
-        // This screen should already be filtered, but just in case:
         String r = role.toLowerCase();
+
+        // Hide promote if already manager/admin
         if (r.equals("manager") || r.equals("admin")) {
             holder.btnPromoteManager.setVisibility(View.GONE);
         } else {
             holder.btnPromoteManager.setVisibility(View.VISIBLE);
         }
 
+        // =========================
+        // PROMOTE BUTTON
+        // =========================
         holder.btnPromoteManager.setOnClickListener(v -> {
             if (user.serverId == null || user.serverId.isEmpty()) {
                 Toast.makeText(context, "Missing serverId for user", Toast.LENGTH_SHORT).show();
@@ -86,7 +92,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
                     Toast.makeText(context, user.username + " promoted ✅", Toast.LENGTH_SHORT).show();
 
-                    // Refresh the list from server so promoted user disappears
                     if (onRefresh != null) onRefresh.refresh();
                 }
 
@@ -98,6 +103,53 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                 }
             });
         });
+
+        // =========================
+        // DELETE BUTTON
+        // =========================
+        holder.btnDelete.setOnClickListener(v -> {
+
+            if (user.serverId == null || user.serverId.isEmpty()) {
+                Toast.makeText(context, "Missing serverId", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Confirm dialog
+            new AlertDialog.Builder(context)
+                    .setTitle("Delete User")
+                    .setMessage("Are you sure you want to delete " + user.username + "?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+
+                        holder.btnDelete.setEnabled(false);
+                        holder.btnDelete.setText("Deleting...");
+
+                        userApi.deleteUser(user.serverId).enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                holder.btnDelete.setEnabled(true);
+                                holder.btnDelete.setText("Delete");
+
+                                if (!response.isSuccessful()) {
+                                    Toast.makeText(context, "Delete failed: " + response.code(), Toast.LENGTH_LONG).show();
+                                    return;
+                                }
+
+                                Toast.makeText(context, user.username + " deleted ❌", Toast.LENGTH_SHORT).show();
+
+                                if (onRefresh != null) onRefresh.refresh();
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                holder.btnDelete.setEnabled(true);
+                                holder.btnDelete.setText("Delete");
+                                Toast.makeText(context, "Network error: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    })
+                    .setNegativeButton("Cancel", null)
+                    .show();
+        });
     }
 
     @Override
@@ -108,11 +160,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     static class UserViewHolder extends RecyclerView.ViewHolder {
         TextView txtUserRow;
         Button btnPromoteManager;
+        Button btnDelete;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             txtUserRow = itemView.findViewById(R.id.txtUserRow);
             btnPromoteManager = itemView.findViewById(R.id.btnPromoteManager);
+            btnDelete = itemView.findViewById(R.id.btnDelete); // ✅ NEW
         }
     }
+
+
 }
