@@ -24,8 +24,8 @@
                 android:layout_marginTop="30dp"
                 app:cardCornerRadius="22dp"
                 app:cardElevation="4dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="#D8C8AA">
+                app:strokeColor="#D8C8AA"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -34,7 +34,6 @@
                     android:orientation="vertical"
                     android:padding="20dp">
 
-                    <!-- Title -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -45,6 +44,28 @@
                         android:textSize="26sp"
                         android:textStyle="bold" />
 
+                    <!-- EMPLOYEE SELECTOR -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:hint="Select Employee"
+                        app:boxBackgroundMode="outline"
+                        app:boxCornerRadiusBottomEnd="14dp"
+                        app:boxCornerRadiusBottomStart="14dp"
+                        app:boxCornerRadiusTopEnd="14dp"
+                        app:boxCornerRadiusTopStart="14dp"
+                        app:boxStrokeColor="#C9B79C">
+
+                        <Spinner
+                            android:id="@+id/spinnerUsers"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="56dp"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
                     <!-- DATE -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
@@ -52,21 +73,21 @@
                         android:layout_marginBottom="12dp"
                         android:hint="Shift Date"
                         app:boxBackgroundMode="outline"
-                        app:boxStrokeColor="#C9B79C"
-                        app:boxCornerRadiusTopStart="14dp"
-                        app:boxCornerRadiusTopEnd="14dp"
+                        app:boxCornerRadiusBottomEnd="14dp"
                         app:boxCornerRadiusBottomStart="14dp"
-                        app:boxCornerRadiusBottomEnd="14dp">
+                        app:boxCornerRadiusTopEnd="14dp"
+                        app:boxCornerRadiusTopStart="14dp"
+                        app:boxStrokeColor="#C9B79C">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="false"
                             android:padding="12dp"
                             android:textColor="#2F241D"
-                            android:textColorHint="#8B7E6B"
-                            android:clickable="true"
-                            android:focusable="false"/>
+                            android:textColorHint="#8B7E6B" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- POSITION -->
@@ -76,18 +97,18 @@
                         android:layout_marginBottom="12dp"
                         android:hint="Position (e.g., Cashier)"
                         app:boxBackgroundMode="outline"
-                        app:boxStrokeColor="#C9B79C"
-                        app:boxCornerRadiusTopStart="14dp"
-                        app:boxCornerRadiusTopEnd="14dp"
+                        app:boxCornerRadiusBottomEnd="14dp"
                         app:boxCornerRadiusBottomStart="14dp"
-                        app:boxCornerRadiusBottomEnd="14dp">
+                        app:boxCornerRadiusTopEnd="14dp"
+                        app:boxCornerRadiusTopStart="14dp"
+                        app:boxStrokeColor="#C9B79C">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etPosition"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="12dp"
-                            android:textColor="#2F241D"/>
+                            android:textColor="#2F241D" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- START TIME -->
@@ -97,20 +118,20 @@
                         android:layout_marginBottom="12dp"
                         android:hint="Start Time"
                         app:boxBackgroundMode="outline"
-                        app:boxStrokeColor="#C9B79C"
-                        app:boxCornerRadiusTopStart="14dp"
-                        app:boxCornerRadiusTopEnd="14dp"
+                        app:boxCornerRadiusBottomEnd="14dp"
                         app:boxCornerRadiusBottomStart="14dp"
-                        app:boxCornerRadiusBottomEnd="14dp">
+                        app:boxCornerRadiusTopEnd="14dp"
+                        app:boxCornerRadiusTopStart="14dp"
+                        app:boxStrokeColor="#C9B79C">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etStartTime"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="12dp"
-                            android:textColor="#2F241D"
                             android:clickable="true"
-                            android:focusable="false"/>
+                            android:focusable="false"
+                            android:padding="12dp"
+                            android:textColor="#2F241D" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- END TIME -->
@@ -120,23 +141,22 @@
                         android:layout_marginBottom="18dp"
                         android:hint="End Time"
                         app:boxBackgroundMode="outline"
-                        app:boxStrokeColor="#C9B79C"
-                        app:boxCornerRadiusTopStart="14dp"
-                        app:boxCornerRadiusTopEnd="14dp"
+                        app:boxCornerRadiusBottomEnd="14dp"
                         app:boxCornerRadiusBottomStart="14dp"
-                        app:boxCornerRadiusBottomEnd="14dp">
+                        app:boxCornerRadiusTopEnd="14dp"
+                        app:boxCornerRadiusTopStart="14dp"
+                        app:boxStrokeColor="#C9B79C">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etEndTime"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="12dp"
-                            android:textColor="#2F241D"
                             android:clickable="true"
-                            android:focusable="false"/>
+                            android:focusable="false"
+                            android:padding="12dp"
+                            android:textColor="#2F241D" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- PRIMARY BUTTON -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnAddShift"
                         android:layout_width="match_parent"
@@ -149,7 +169,6 @@
                         android:textStyle="bold"
                         app:cornerRadius="14dp" />
 
-                    <!-- SECONDARY BUTTON -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnViewShifts"
                         android:layout_width="match_parent"
@@ -162,11 +181,7 @@
                         app:cornerRadius="14dp" />
 
                 </LinearLayout>
-
             </com.google.android.material.card.MaterialCardView>
-
         </LinearLayout>
-
     </ScrollView>
-
 </FrameLayout>
