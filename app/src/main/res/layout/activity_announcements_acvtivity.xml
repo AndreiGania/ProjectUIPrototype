@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/sample2">
 
-    <!-- Dark overlay to calm the background -->
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -16,11 +15,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Main Card -->
     <androidx.cardview.widget.CardView
         android:id="@+id/announcementCard"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_margin="24dp"
         app:cardCornerRadius="28dp"
         app:cardElevation="14dp"
@@ -33,11 +31,10 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="28dp">
 
-            <!-- Title -->
             <TextView
                 android:id="@+id/titleText2"
                 android:layout_width="match_parent"
@@ -49,7 +46,6 @@
                 android:gravity="center"
                 android:paddingBottom="8dp" />
 
-            <!-- Subtle Divider -->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -57,18 +53,15 @@
                 android:layout_marginBottom="18dp"
                 android:background="#40F6E3D3" />
 
-            <!-- Announcement Box -->
-            <TextView
-                android:id="@+id/tvAnnouncementsList"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerAnnouncements"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="No announcements yet."
-                android:textColor="#F6E3D3"
-                android:textSize="16sp"
-                android:lineSpacingExtra="6dp"
-                android:padding="18dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:background="#25FFFFFF"
-                android:textStyle="normal" />
+                android:padding="12dp"
+                android:clipToPadding="false"
+                android:scrollbars="vertical" />
 
         </LinearLayout>
 

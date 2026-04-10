@@ -59,4 +59,32 @@ router.patch("/:id/promote", requireManager, async (req, res) => {
   }
 });
 
+// DELETE /users/:id  (manager/admin only)
+router.delete("/:id", requireManager, async (req, res) => {
+try {
+const { id } = req.params;
+
+
+const user = await User.findById(id);
+if (!user) {
+  return res.status(404).json({ error: "User not found" });
+}
+
+// ❌ prevent deleting admins (optional safety)
+if (user.role === "admin") {
+  return res.status(400).json({ error: "Cannot delete admin" });
+}
+
+await User.findByIdAndDelete(id);
+
+res.json({ message: "User deleted successfully" });
+
+
+} catch (err) {
+res.status(500).json({ error: err.message });
+}
+});
+
+
+
 module.exports = router;

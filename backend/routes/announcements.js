@@ -3,7 +3,6 @@ const Announcement = require("../models/Announcement");
 
 const router = express.Router();
 
-
 // GET ALL announcements (newest first)
 router.get("/", async (req, res) => {
   try {
@@ -13,7 +12,6 @@ router.get("/", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
 
 // GET latest announcement (BEST for dashboard)
 router.get("/latest", async (req, res) => {
@@ -30,7 +28,6 @@ router.get("/latest", async (req, res) => {
   }
 });
 
-
 // CREATE new announcement
 router.post("/", async (req, res) => {
   try {
@@ -46,11 +43,24 @@ router.post("/", async (req, res) => {
     });
 
     res.status(201).json(created);
-
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
+// DELETE announcement by id
+router.delete("/:id", async (req, res) => {
+  try {
+    const deleted = await Announcement.findByIdAndDelete(req.params.id);
+
+    if (!deleted) {
+      return res.status(404).json({ error: "Announcement not found" });
+    }
+
+    res.json({ message: "Announcement deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 module.exports = router;
