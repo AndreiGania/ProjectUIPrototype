@@ -1,18 +1,20 @@
 package com.example.projectuiprototype.activities;
 
 import android.os.Bundle;
-import android.text.Html;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectuiprototype.R;
 import com.example.projectuiprototype.api.AnnouncementApi;
 import com.example.projectuiprototype.api.AnnouncementDto;
 import com.example.projectuiprototype.api.ApiClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -21,18 +23,22 @@ import retrofit2.Response;
 
 public class AnnouncementsActivity extends AppCompatActivity {
 
-    private TextView tvAnnouncementsList;
+    private RecyclerView recyclerAnnouncements;
+    private AnnouncementAdapter adapter;
     private AnnouncementApi announcementApi;
+    private final List<AnnouncementDto> announcementList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-
-        // FIXED layout name here
         setContentView(R.layout.activity_announcements_acvtivity);
 
-        tvAnnouncementsList = findViewById(R.id.tvAnnouncementsList);
+        recyclerAnnouncements = findViewById(R.id.recyclerAnnouncements);
+        recyclerAnnouncements.setLayoutManager(new LinearLayoutManager(this));
+
+        adapter = new AnnouncementAdapter(this, announcementList);
+        recyclerAnnouncements.setAdapter(adapter);
 
         announcementApi = ApiClient.getClient(this).create(AnnouncementApi.class);
 
@@ -42,9 +48,8 @@ public class AnnouncementsActivity extends AppCompatActivity {
     private void loadAnnouncements() {
         announcementApi.getAnnouncements().enqueue(new Callback<List<AnnouncementDto>>() {
             @Override
-            public void onResponse(Call<List<AnnouncementDto>> call, Response<List<AnnouncementDto>> response) {
+            public void onResponse(@NonNull Call<List<AnnouncementDto>> call, @NonNull Response<List<AnnouncementDto>> response) {
                 if (!response.isSuccessful() || response.body() == null) {
-                    tvAnnouncementsList.setText("Failed to load announcements.");
                     Toast.makeText(
                             AnnouncementsActivity.this,
                             "Load failed: " + response.code(),
@@ -53,34 +58,21 @@ public class AnnouncementsActivity extends AppCompatActivity {
                     return;
                 }
 
-                List<AnnouncementDto> announcements = response.body();
+                announcementList.clear();
+                announcementList.addAll(response.body());
+                adapter.notifyDataSetChanged();
 
-                if (announcements.isEmpty()) {
-                    tvAnnouncementsList.setText("No announcements yet.");
-                    return;
+                if (announcementList.isEmpty()) {
+                    Toast.makeText(
+                            AnnouncementsActivity.this,
+                            "No announcements yet.",
+                            Toast.LENGTH_SHORT
+                    ).show();
                 }
-
-                StringBuilder sb = new StringBuilder();
-
-                for (AnnouncementDto a : announcements) {
-                    String title = a.title == null ? "" : a.title;
-                    String message = a.message == null ? "" : a.message;
-
-                    sb.append("• <b>")
-                            .append(title)
-                            .append("</b><br>")
-                            .append(message)
-                            .append("<br><br>");
-                }
-
-                tvAnnouncementsList.setText(
-                        Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY)
-                );
             }
 
             @Override
-            public void onFailure(Call<List<AnnouncementDto>> call, Throwable t) {
-                tvAnnouncementsList.setText("Network error loading announcements.");
+            public void onFailure(@NonNull Call<List<AnnouncementDto>> call, @NonNull Throwable t) {
                 Toast.makeText(
                         AnnouncementsActivity.this,
                         "Network error: " + t.getMessage(),
