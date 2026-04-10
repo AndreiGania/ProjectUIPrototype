@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
+    android:layout_marginBottom="12dp"
     android:foreground="?attr/selectableItemBackground"
-    app:cardBackgroundColor="#3C2A21"
+    app:cardBackgroundColor="#F8F1E4"
     app:cardCornerRadius="18dp"
-    app:cardElevation="5dp"
+    app:cardElevation="3dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="#D8C8AA"
     app:contentPadding="14dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +24,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="Coffee Beans"
-            android:textColor="@android:color/white"
+            android:textColor="#2F241D"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/txtInvQty"
@@ -37,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="Qty: 12"
-            android:textColor="#E6D5C9"
+            android:textColor="#7A6E62"
             android:textSize="13sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtInvName"
@@ -48,17 +49,16 @@
             android:layout_width="72dp"
             android:layout_height="36dp"
             android:layout_marginEnd="8dp"
-            android:backgroundTint="#83542A"
+            android:backgroundTint="#3C2A21"
             android:text="Edit"
             android:textAllCaps="false"
-            android:textColor="@android:color/white"
+            android:textColor="#F8F1E4"
             android:textSize="13sp"
             android:textStyle="bold"
             app:cornerRadius="18dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnDeleteInv"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="TouchTargetSizeCheck" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/btnDeleteInv"
@@ -69,7 +69,7 @@
             android:foreground="?attr/selectableItemBackgroundBorderless"
             android:gravity="center"
             android:text="✕"
-            android:textColor="#F4D7C3"
+            android:textColor="#3C2A21"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

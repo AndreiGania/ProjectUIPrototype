@@ -1,36 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="12dp"
-    android:background="#3C2A21"
-    android:layout_margin="6dp"
-    android:gravity="center_vertical">
+    android:layout_margin="8dp"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="3dp"
+    app:cardBackgroundColor="#F8F1E4"
+    app:strokeWidth="1dp"
+    app:strokeColor="#D8C8AA">
 
-    <TextView
-        android:id="@+id/txtUserRow"
-        android:layout_width="0dp"
-        android:layout_weight="1"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"/>
+        android:orientation="horizontal"
+        android:padding="14dp"
+        android:gravity="center_vertical">
 
-    <Button
-        android:id="@+id/btnPromoteManager"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Make Manager"
-        android:backgroundTint="#D4A017"
-        android:textColor="@android:color/white"/>
+        <TextView
+            android:id="@+id/txtUserRow"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="#2F241D"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
 
+        <Button
+            android:id="@+id/btnPromoteManager"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="#D4A017"
+            android:text="Manager"
+            android:textAllCaps="false"
+            android:textColor="#2F241D"
+            android:textStyle="bold"
+            tools:ignore="TouchTargetSizeCheck" />
 
-    <Button
-        android:id="@+id/btnDelete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Delete"
-        android:backgroundTint="@android:color/holo_red_dark"
-        android:textColor="@android:color/white"/>
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:backgroundTint="#3C2A21"
+            android:text="Delete"
+            android:textAllCaps="false"
+            android:textColor="#F8F1E4"
+            android:textStyle="bold"
+            tools:ignore="TouchTargetSizeCheck" />
 
-</LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
