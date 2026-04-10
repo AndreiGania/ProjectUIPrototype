@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/image"
+    android:background="#E6DFC9"
     tools:context=".activities.MainActivity">
 
     <androidx.cardview.widget.CardView
@@ -13,9 +13,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="32dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="8dp"
-        app:cardBackgroundColor="#3C2A21"
+        app:cardCornerRadius="22dp"
+        app:cardElevation="6dp"
+        app:cardBackgroundColor="#F3EBDC"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,26 +25,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="20dp">
 
             <TextView
                 android:id="@+id/loginTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Sign in to your account"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
+                android:textColor="#2F241D"
+                android:textSize="20sp"
                 android:gravity="center"
-                android:paddingBottom="12dp"
+                android:paddingBottom="16dp"
                 android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:boxStrokeWidthFocused="2dp"
-                app:hintTextColor="@color/login_hint_color"
                 app:boxBackgroundMode="outline"
-                app:boxStrokeColor="#D4A017">
+                app:boxStrokeColor="#C9B79C"
+                app:hintTextColor="#8B7E6B">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/usernameInput"
@@ -52,17 +51,17 @@
                     android:layout_height="wrap_content"
                     android:hint="Username"
                     android:inputType="textPersonName"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="#F5E6C8" />
+                    android:textColor="#2F241D"
+                    android:textColorHint="#8B7E6B" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:hintTextColor="@color/login_hint_color"
+                android:layout_marginTop="10dp"
                 app:boxBackgroundMode="outline"
-                app:boxStrokeColor="#D4A017">
+                app:boxStrokeColor="#C9B79C"
+                app:hintTextColor="#8B7E6B">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/passwordInput"
@@ -70,18 +69,18 @@
                     android:layout_height="wrap_content"
                     android:hint="Password"
                     android:inputType="textPassword"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="#F5E6C8" />
+                    android:textColor="#2F241D"
+                    android:textColorHint="#8B7E6B" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/signInButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="#D4A017"
+                android:layout_marginTop="18dp"
+                android:backgroundTint="#3C2A21"
                 android:text="Sign In"
-                android:textColor="@android:color/white"
+                android:textColor="#F8F1E4"
                 android:textStyle="bold" />
 
             <TextView
@@ -90,8 +89,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="Forgot my password?"
-                android:textColor="#BCAAA4"
-                android:textSize="12sp"
+                android:textColor="#7A6E62"
+                android:textSize="13sp"
                 android:gravity="center" />
 
             <Button
@@ -99,9 +98,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:backgroundTint="@android:color/white"
+                android:backgroundTint="#D4A017"
                 android:text="Register"
-                android:textColor="#D4A017"
+                android:textColor="#2F241D"
                 android:textStyle="bold" />
 
         </LinearLayout>

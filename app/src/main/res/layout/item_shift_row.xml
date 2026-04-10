@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="14dp"
-    app:cardElevation="4dp"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="3dp"
     app:strokeWidth="1dp"
-    app:strokeColor="#1F000000">
+    app:strokeColor="#D8C8AA"
+    app:cardBackgroundColor="#F8F1E4">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:padding="12dp"
-        android:background="#FFFFFF">
+        android:padding="14dp">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -28,8 +29,8 @@
                 android:layout_height="wrap_content"
                 android:text="2026-02-20 • Cashier"
                 android:textStyle="bold"
-                android:textSize="15sp"
-                android:textColor="#2B1B12" />
+                android:textSize="16sp"
+                android:textColor="#2F241D" />
 
             <TextView
                 android:id="@+id/txtShiftTime"
@@ -37,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:text="9:00 AM - 5:00 PM"
                 android:textSize="13sp"
-                android:textColor="#666666"
+                android:textColor="#7A6E62"
                 android:paddingTop="4dp" />
         </LinearLayout>
 
@@ -45,11 +46,12 @@
             android:id="@+id/btnDeleteShift"
             android:layout_width="64dp"
             android:layout_height="42dp"
-            android:backgroundTint="#C62828"
+            android:backgroundTint="#3C2A21"
             android:text="✕"
-            android:textColor="#FFFFFF"
+            android:textColor="#F8F1E4"
             android:textStyle="bold"
-            app:cornerRadius="12dp" />
+            app:cornerRadius="12dp"
+            tools:ignore="TouchTargetSizeCheck" />
 
     </LinearLayout>
 
