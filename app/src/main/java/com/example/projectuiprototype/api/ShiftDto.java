@@ -6,7 +6,7 @@ public class ShiftDto {
     public String employeeUsername;
     public String start;
     public String end;
-    public String role;
+    public String position;
     public String notes;
     public String createdAt;
     public String updatedAt;

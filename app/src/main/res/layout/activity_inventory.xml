@@ -3,42 +3,41 @@
     android:id="@+id/inventoryLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/image"
+    android:background="#E6DFC9"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="20dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Inventory"
-        android:textColor="@android:color/white"
-        android:textSize="22sp"
+        android:textColor="#2F241D"
+        android:textSize="24sp"
         android:gravity="center"
         android:textStyle="bold"
-        android:layout_marginBottom="12dp"/>
+        android:layout_marginBottom="14dp"/>
 
     <Button
         android:id="@+id/btnAddItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="+ Add Item"
-        android:textColor="@android:color/white"
-        android:backgroundTint="#83542A"
+        android:textColor="#F8F1E4"
+        android:backgroundTint="#3C2A21"
         android:textStyle="bold"
         android:layout_marginBottom="12dp"/>
 
-    <!-- 🔍 Search Bar -->
     <EditText
         android:id="@+id/searchInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:background="#3C2A21"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/bg_input_round_light"
         android:hint="Search item..."
         android:minHeight="48dp"
-        android:padding="10dp"
-        android:textColor="@android:color/white"
-        android:textColorHint="#BDBDBD" />
+        android:padding="12dp"
+        android:textColor="#2F241D"
+        android:textColorHint="#8B7E6B" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/inventoryRecycler"

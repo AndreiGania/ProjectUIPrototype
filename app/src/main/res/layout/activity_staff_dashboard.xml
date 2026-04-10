@@ -3,30 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <!-- Background image -->
-    <ImageView
-        android:id="@+id/bgImage"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:src="@drawable/image"
-        android:scaleType="centerCrop"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- Dark overlay -->
-    <View
-        android:id="@+id/overlay"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#66000000"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    android:layout_height="match_parent"
+    android:background="#E6DFC9">
 
     <!-- Title -->
     <TextView
@@ -35,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="Staff Dashboard"
-        android:textColor="#FFFFFF"
+        android:textColor="#2F241D"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
@@ -49,9 +27,9 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="20dp"
-        app:cardBackgroundColor="#CC3C2A21"
+        app:cardBackgroundColor="#F3EBDC"
         app:cardCornerRadius="18dp"
-        app:cardElevation="10dp"
+        app:cardElevation="4dp"
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -66,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Next Shift"
-                android:textColor="#FFFFFF"
+                android:textColor="#2F241D"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -76,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Friday, 2:00 PM - 8:00 PM"
-                android:textColor="#F6E3D3"
+                android:textColor="#4B4038"
                 android:textSize="15sp" />
 
             <TextView
@@ -85,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="Front Counter"
-                android:textColor="#BFAFA8"
+                android:textColor="#7A6E62"
                 android:textSize="14sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -97,9 +75,9 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="12dp"
-        app:cardBackgroundColor="#CC3C2A21"
+        app:cardBackgroundColor="#F3EBDC"
         app:cardCornerRadius="18dp"
-        app:cardElevation="10dp"
+        app:cardElevation="4dp"
         app:layout_constraintTop_toBottomOf="@id/cardNextShift"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -110,24 +88,22 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Title (this will stay "Announcements") -->
             <TextView
                 android:id="@+id/txtLatestAnnouncementTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Announcements"
-                android:textColor="#FFFFFF"
+                android:textColor="#2F241D"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <!-- MESSAGE (this is dynamic now) -->
             <TextView
                 android:id="@+id/txtLatestAnnouncementMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:text="Loading latest announcement..."
-                android:textColor="#BFAFA8"
+                android:textColor="#7A6E62"
                 android:textSize="14sp" />
 
             <Button
@@ -135,10 +111,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="12dp"
-                android:backgroundTint="#F6E3D3"
+                android:backgroundTint="#3C2A21"
                 android:text="View All"
                 android:textAllCaps="false"
-                android:textColor="#3C2A21"
+                android:textColor="#F8F1E4"
                 android:textStyle="bold" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -163,7 +139,7 @@
             android:backgroundTint="#D4A017"
             android:text="My Schedule"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
+            android:textColor="#2F241D"
             android:textStyle="bold" />
 
         <Button
@@ -174,7 +150,7 @@
             android:backgroundTint="#D4A017"
             android:text="Inventory"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
+            android:textColor="#2F241D"
             android:textStyle="bold" />
 
         <Button
@@ -184,7 +160,7 @@
             android:backgroundTint="#D4A017"
             android:text="Announcements"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
+            android:textColor="#2F241D"
             android:textStyle="bold" />
     </LinearLayout>
 

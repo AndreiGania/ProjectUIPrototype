@@ -2,20 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <!-- Background -->
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/image"
-        android:scaleType="centerCrop" />
-
-    <!-- Dark overlay (MATCHES dashboard) -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#66000000" />
+    android:layout_height="match_parent"
+    android:background="#E6DFC9">
 
     <ScrollView
         android:id="@+id/main"
@@ -34,29 +22,49 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="8dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="#1F000000">
+                app:cardCornerRadius="22dp"
+                app:cardElevation="4dp"
+                app:strokeColor="#D8C8AA"
+                app:strokeWidth="1dp">
 
-                <!-- slightly more glass look -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#F2E2C7B8"
+                    android:background="#F3EBDC"
                     android:orientation="vertical"
-                    android:padding="18dp">
+                    android:padding="20dp">
 
-                    <!-- Title -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:paddingBottom="14dp"
+                        android:paddingBottom="16dp"
                         android:text="Manage Shifts"
-                        android:textColor="#2B1B12"
+                        android:textColor="#2F241D"
                         android:textSize="26sp"
                         android:textStyle="bold" />
+
+                    <!-- EMPLOYEE SELECTOR -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:hint="Select Employee"
+                        app:boxBackgroundMode="outline"
+                        app:boxCornerRadiusBottomEnd="14dp"
+                        app:boxCornerRadiusBottomStart="14dp"
+                        app:boxCornerRadiusTopEnd="14dp"
+                        app:boxCornerRadiusTopStart="14dp"
+                        app:boxStrokeColor="#C9B79C">
+
+                        <Spinner
+                            android:id="@+id/spinnerUsers"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="56dp"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- DATE -->
                     <com.google.android.material.textfield.TextInputLayout
@@ -65,23 +73,21 @@
                         android:layout_marginBottom="12dp"
                         android:hint="Shift Date"
                         app:boxBackgroundMode="outline"
-                        app:boxStrokeColor="#8B6B4F"
-                        app:boxCornerRadiusTopStart="14dp"
-                        app:boxCornerRadiusTopEnd="14dp"
-                        app:boxCornerRadiusBottomStart="14dp"
                         app:boxCornerRadiusBottomEnd="14dp"
-                        app:endIconDrawable="@android:drawable/ic_menu_my_calendar"
-                        app:endIconMode="custom">
+                        app:boxCornerRadiusBottomStart="14dp"
+                        app:boxCornerRadiusTopEnd="14dp"
+                        app:boxCornerRadiusTopStart="14dp"
+                        app:boxStrokeColor="#C9B79C">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="12dp"
-                            android:textColor="#2B1B12"
-                            android:textColorHint="#6B4F3A"
                             android:clickable="true"
-                            android:focusable="false"/>
+                            android:focusable="false"
+                            android:padding="12dp"
+                            android:textColor="#2F241D"
+                            android:textColorHint="#8B7E6B" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- POSITION -->
@@ -91,18 +97,18 @@
                         android:layout_marginBottom="12dp"
                         android:hint="Position (e.g., Cashier)"
                         app:boxBackgroundMode="outline"
-                        app:boxStrokeColor="#8B6B4F"
-                        app:boxCornerRadiusTopStart="14dp"
-                        app:boxCornerRadiusTopEnd="14dp"
+                        app:boxCornerRadiusBottomEnd="14dp"
                         app:boxCornerRadiusBottomStart="14dp"
-                        app:boxCornerRadiusBottomEnd="14dp">
+                        app:boxCornerRadiusTopEnd="14dp"
+                        app:boxCornerRadiusTopStart="14dp"
+                        app:boxStrokeColor="#C9B79C">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etPosition"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="12dp"
-                            android:textColor="#2B1B12"/>
+                            android:textColor="#2F241D" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- START TIME -->
@@ -112,80 +118,70 @@
                         android:layout_marginBottom="12dp"
                         android:hint="Start Time"
                         app:boxBackgroundMode="outline"
-                        app:boxStrokeColor="#8B6B4F"
-                        app:boxCornerRadiusTopStart="14dp"
-                        app:boxCornerRadiusTopEnd="14dp"
-                        app:boxCornerRadiusBottomStart="14dp"
                         app:boxCornerRadiusBottomEnd="14dp"
-                        app:endIconDrawable="@android:drawable/ic_lock_idle_alarm"
-                        app:endIconMode="custom">
+                        app:boxCornerRadiusBottomStart="14dp"
+                        app:boxCornerRadiusTopEnd="14dp"
+                        app:boxCornerRadiusTopStart="14dp"
+                        app:boxStrokeColor="#C9B79C">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etStartTime"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="12dp"
-                            android:textColor="#2B1B12"
                             android:clickable="true"
-                            android:focusable="false"/>
+                            android:focusable="false"
+                            android:padding="12dp"
+                            android:textColor="#2F241D" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- END TIME -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginBottom="18dp"
                         android:hint="End Time"
                         app:boxBackgroundMode="outline"
-                        app:boxStrokeColor="#8B6B4F"
-                        app:boxCornerRadiusTopStart="14dp"
-                        app:boxCornerRadiusTopEnd="14dp"
-                        app:boxCornerRadiusBottomStart="14dp"
                         app:boxCornerRadiusBottomEnd="14dp"
-                        app:endIconDrawable="@android:drawable/ic_lock_idle_alarm"
-                        app:endIconMode="custom">
+                        app:boxCornerRadiusBottomStart="14dp"
+                        app:boxCornerRadiusTopEnd="14dp"
+                        app:boxCornerRadiusTopStart="14dp"
+                        app:boxStrokeColor="#C9B79C">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etEndTime"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="12dp"
-                            android:textColor="#2B1B12"
                             android:clickable="true"
-                            android:focusable="false"/>
+                            android:focusable="false"
+                            android:padding="12dp"
+                            android:textColor="#2F241D" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- PRIMARY BUTTON -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnAddShift"
                         android:layout_width="match_parent"
                         android:layout_height="52dp"
                         android:layout_marginBottom="12dp"
-                        android:backgroundTint="#F4A261"
+                        android:backgroundTint="#3C2A21"
                         android:text="Add Shift"
                         android:textAllCaps="false"
-                        android:textColor="#FFFFFF"
+                        android:textColor="#F8F1E4"
                         android:textStyle="bold"
                         app:cornerRadius="14dp" />
 
-                    <!-- SECONDARY BUTTON -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnViewShifts"
                         android:layout_width="match_parent"
                         android:layout_height="52dp"
-                        android:backgroundTint="#3C2A21"
+                        android:backgroundTint="#D4A017"
                         android:text="View All Shifts"
                         android:textAllCaps="false"
-                        android:textColor="#FFFFFF"
+                        android:textColor="#2F241D"
                         android:textStyle="bold"
                         app:cornerRadius="14dp" />
 
                 </LinearLayout>
-
             </com.google.android.material.card.MaterialCardView>
-
         </LinearLayout>
-
     </ScrollView>
-
 </FrameLayout>

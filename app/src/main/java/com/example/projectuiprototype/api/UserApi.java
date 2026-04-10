@@ -16,7 +16,6 @@ public interface UserApi {
     @PATCH("users/{id}/promote")
     Call<UserDto> promoteToManager(@Path("id") String userId);
 
-    // ✅ DELETE USER
     @DELETE("users/{id}")
     Call<Void> deleteUser(@Path("id") String userId);
 

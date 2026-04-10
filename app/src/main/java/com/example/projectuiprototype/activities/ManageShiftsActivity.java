@@ -2,10 +2,11 @@ package com.example.projectuiprototype.activities;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -20,6 +21,8 @@ import com.example.projectuiprototype.api.ApiClient;
 import com.example.projectuiprototype.api.CreateShiftRequest;
 import com.example.projectuiprototype.api.ShiftApi;
 import com.example.projectuiprototype.api.ShiftDto;
+import com.example.projectuiprototype.api.UserApi;
+import com.example.projectuiprototype.api.UserDto;
 import com.example.projectuiprototype.models.Shift;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -38,19 +41,20 @@ import retrofit2.Response;
 
 public class ManageShiftsActivity extends AppCompatActivity {
 
+    private Spinner spinnerUsers;
     private TextInputEditText etDate;
     private TextInputEditText etPosition;
     private TextInputEditText etStartTime;
     private TextInputEditText etEndTime;
-
     private MaterialButton btnAddShift;
     private MaterialButton btnViewShifts;
 
     private ShiftApi shiftApi;
+    private UserApi userApi;
 
-    // Loaded from SharedPreferences (set in LoginActivity)
-    private String employeeId;
-    private String employeeUsername;
+    private final List<UserDto> allUsers = new ArrayList<>();
+    private final List<String> spinnerItems = new ArrayList<>();
+    private ArrayAdapter<String> spinnerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,27 +68,25 @@ public class ManageShiftsActivity extends AppCompatActivity {
             return insets;
         });
 
-        SharedPreferences prefs = getSharedPreferences("auth", MODE_PRIVATE);
-        employeeId = prefs.getString("userId", null);
-
-        // Choose ONE:
-        // employeeUsername = prefs.getString("username", null); // shows "test"
-        employeeUsername = prefs.getString("username", null);
-
-        if (employeeId == null || employeeId.isEmpty() || employeeUsername == null || employeeUsername.isEmpty()) {
-            Toast.makeText(this, "Missing user info. Please login again.", Toast.LENGTH_LONG).show();
-        }
-
+        spinnerUsers = findViewById(R.id.spinnerUsers);
         etDate = findViewById(R.id.etDate);
         etPosition = findViewById(R.id.etPosition);
         etStartTime = findViewById(R.id.etStartTime);
         etEndTime = findViewById(R.id.etEndTime);
-
         btnAddShift = findViewById(R.id.btnAddShift);
         btnViewShifts = findViewById(R.id.btnViewShifts);
 
-        // Retrofit API (token auto-attached by ApiClient interceptor)
         shiftApi = ApiClient.getClient(getApplicationContext()).create(ShiftApi.class);
+        userApi = ApiClient.getClient(getApplicationContext()).create(UserApi.class);
+
+        spinnerItems.add("Select employee");
+        spinnerAdapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_spinner_item,
+                spinnerItems
+        );
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerUsers.setAdapter(spinnerAdapter);
 
         etDate.setOnClickListener(v -> showDatePicker());
         etStartTime.setOnClickListener(v -> showTimePicker(etStartTime));
@@ -92,9 +94,44 @@ public class ManageShiftsActivity extends AppCompatActivity {
 
         btnAddShift.setOnClickListener(v -> addShiftToServer());
         btnViewShifts.setOnClickListener(v -> fetchAndShowShifts());
+
+        loadUsers();
     }
 
-    // ---------------- Pickers ----------------
+    private void loadUsers() {
+        userApi.getUsers().enqueue(new Callback<List<UserDto>>() {
+            @Override
+            public void onResponse(Call<List<UserDto>> call, Response<List<UserDto>> response) {
+                if (!response.isSuccessful() || response.body() == null) {
+                    Toast.makeText(ManageShiftsActivity.this, "Failed to load users", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                allUsers.clear();
+                spinnerItems.clear();
+                spinnerItems.add("Select employee");
+
+                for (UserDto user : response.body()) {
+                    if (user == null) continue;
+
+                    if ("manager".equalsIgnoreCase(user.role) || "admin".equalsIgnoreCase(user.role)) {
+                        continue;
+                    }
+
+                    allUsers.add(user);
+                    spinnerItems.add(user.username + " (" + user.name + ")");
+                }
+
+                spinnerAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<List<UserDto>> call, Throwable t) {
+                Toast.makeText(ManageShiftsActivity.this, "Network error loading users: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     private void showDatePicker() {
         Calendar cal = Calendar.getInstance();
         int y = cal.get(Calendar.YEAR);
@@ -140,9 +177,6 @@ public class ManageShiftsActivity extends AppCompatActivity {
         return editText.getText() == null ? "" : editText.getText().toString().trim();
     }
 
-    /**
-     * Converts ("2026-02-16", "9:00 AM") -> "2026-02-16T14:00:00.000Z" (UTC)
-     */
     private String toIsoUtc(String dateYYYYMMDD, String time12h) throws Exception {
         String combined = dateYYYYMMDD + " " + time12h;
 
@@ -156,12 +190,15 @@ public class ManageShiftsActivity extends AppCompatActivity {
         return outFmt.format(parsed);
     }
 
-    // ---------------- API: POST shift ----------------
     private void addShiftToServer() {
-        if (employeeId == null || employeeId.isEmpty() || employeeUsername == null || employeeUsername.isEmpty()) {
-            Toast.makeText(this, "Please login again (missing user info).", Toast.LENGTH_LONG).show();
+        int selectedIndex = spinnerUsers.getSelectedItemPosition();
+
+        if (selectedIndex <= 0 || selectedIndex - 1 >= allUsers.size()) {
+            Toast.makeText(this, "Please select an employee", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        UserDto selectedUser = allUsers.get(selectedIndex - 1);
 
         String date = getText(etDate);
         String position = getText(etPosition);
@@ -171,26 +208,30 @@ public class ManageShiftsActivity extends AppCompatActivity {
         if (date.isEmpty()) {
             etDate.setError("Date required");
             etDate.requestFocus();
-            Toast.makeText(this, "Please select a date", Toast.LENGTH_SHORT).show();
             return;
         }
+
         if (position.isEmpty()) {
             etPosition.setError("Position required");
             etPosition.requestFocus();
             return;
         }
+
         if (start12.isEmpty()) {
             etStartTime.setError("Start time required");
             etStartTime.requestFocus();
             return;
         }
+
         if (end12.isEmpty()) {
             etEndTime.setError("End time required");
             etEndTime.requestFocus();
             return;
         }
 
-        String startIso, endIso;
+        String startIso;
+        String endIso;
+
         try {
             startIso = toIsoUtc(date, start12);
             endIso = toIsoUtc(date, end12);
@@ -200,24 +241,25 @@ public class ManageShiftsActivity extends AppCompatActivity {
         }
 
         CreateShiftRequest req = new CreateShiftRequest(
-                employeeId,
-                employeeUsername,
+                selectedUser.id,
+                selectedUser.username,
                 startIso,
-                endIso
+                endIso,
+                position,
+                ""
         );
 
         shiftApi.createShift(req).enqueue(new Callback<ShiftDto>() {
             @Override
             public void onResponse(Call<ShiftDto> call, Response<ShiftDto> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(ManageShiftsActivity.this,
-                            "Create failed: " + response.code(),
-                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(ManageShiftsActivity.this, "Create failed: " + response.code(), Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                Toast.makeText(ManageShiftsActivity.this, "Shift saved", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ManageShiftsActivity.this, "Shift assigned to " + selectedUser.username, Toast.LENGTH_SHORT).show();
 
+                spinnerUsers.setSelection(0);
                 etDate.setText("");
                 etPosition.setText("");
                 etStartTime.setText("");
@@ -226,22 +268,17 @@ public class ManageShiftsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ShiftDto> call, Throwable t) {
-                Toast.makeText(ManageShiftsActivity.this,
-                        "Network error: " + t.getMessage(),
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(ManageShiftsActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    // ---------------- API: GET shifts + show dialog using your adapter ----------------
     private void fetchAndShowShifts() {
         shiftApi.getShifts().enqueue(new Callback<List<ShiftDto>>() {
             @Override
             public void onResponse(Call<List<ShiftDto>> call, Response<List<ShiftDto>> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(ManageShiftsActivity.this,
-                            "Load failed: " + response.code(),
-                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(ManageShiftsActivity.this, "Load failed: " + response.code(), Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -251,7 +288,6 @@ public class ManageShiftsActivity extends AppCompatActivity {
                     return;
                 }
 
-                // Map ShiftDto -> your local Shift model (day/time) for adapter reuse
                 List<Shift> listForAdapter = new ArrayList<>();
                 for (ShiftDto s : serverShifts) {
                     Shift local = new Shift();
@@ -260,10 +296,10 @@ public class ManageShiftsActivity extends AppCompatActivity {
                     String niceStart = (s.start != null) ? formatTimeNice(s.start) : "?";
                     String niceEnd = (s.end != null) ? formatTimeNice(s.end) : "?";
 
+                    String position = (s.position != null && !s.position.isEmpty()) ? s.position : "No position";
+
                     local.day = s.employeeUsername + " • " + niceDate;
-                    local.time = niceStart + " - " + niceEnd;
-
-
+                    local.time = position + " • " + niceStart + " - " + niceEnd;
                     local.userId = 1;
 
                     listForAdapter.add(local);
@@ -274,9 +310,7 @@ public class ManageShiftsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<ShiftDto>> call, Throwable t) {
-                Toast.makeText(ManageShiftsActivity.this,
-                        "Network error: " + t.getMessage(),
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(ManageShiftsActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -288,7 +322,7 @@ public class ManageShiftsActivity extends AppCompatActivity {
             Date d = inFmt.parse(iso);
 
             SimpleDateFormat outFmt = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
-            outFmt.setTimeZone(TimeZone.getDefault()); // local time
+            outFmt.setTimeZone(TimeZone.getDefault());
             return outFmt.format(d);
         } catch (Exception e) {
             return iso;
@@ -302,12 +336,13 @@ public class ManageShiftsActivity extends AppCompatActivity {
             Date d = inFmt.parse(iso);
 
             SimpleDateFormat outFmt = new SimpleDateFormat("h:mm a", Locale.US);
-            outFmt.setTimeZone(TimeZone.getDefault()); // local time
+            outFmt.setTimeZone(TimeZone.getDefault());
             return outFmt.format(d);
         } catch (Exception e) {
             return iso;
         }
     }
+
     private void showShiftsDialog(List<Shift> shifts) {
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_shifts_list, null);
         ListView listView = dialogView.findViewById(R.id.listShifts);

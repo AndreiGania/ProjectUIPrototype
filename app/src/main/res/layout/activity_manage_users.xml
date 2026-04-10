@@ -3,22 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@drawable/image">
+    android:padding="20dp"
+    android:background="#E6DFC9">
 
     <TextView
         android:text="Promote Users to Manager"
-        android:textSize="18sp"
+        android:textSize="22sp"
         android:textStyle="bold"
-        android:textColor="@android:color/white"
+        android:textColor="#2F241D"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="12dp"/>
+        android:paddingBottom="16dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerUsers"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
 </LinearLayout>
